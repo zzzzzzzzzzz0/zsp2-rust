@@ -1,0 +1,17 @@
+<%
+赋予号、标题前以我的参、i、t。
+%>
+<title><%“‘标题前’ ‘视频‘号’标题’ - ‘网站标题’”%></title>
+<style>
+<%我的文件、1.css%>
+</style>
+<div class="item2 item-1 item-2">
+<div class=info>
+<div><span class="txt size2"><%‘视频‘号’标题’%></span></div>
+<div class=bar>
+<div class=play><a href="javascript:window.close()">关闭</a></div>
+</div>
+</div>
+<video src="get.zsp?c=mov&i=<%‘号’%>" controls="controls">
+</video>
+</div>

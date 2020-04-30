@@ -1,0 +1,44 @@
+body {
+	background-image:url(bg.jpg); background-repeat:repeat;
+}
+.txt {background-color:#fff; color:#000; font-size:12px;}
+.size2 {font-size:16px;}
+a {text-decoration:none;}
+.item {
+	float:left;
+	padding:7px;
+	display:inline-table;
+}
+.item-1 {
+	background-color:rgba(0,0,0,0.1);
+	word-break:break-all;
+}
+.item-2 {
+	text-align:center;
+	vertical-align:middle;
+}
+.item2 {
+	padding:10px;
+}
+.bar {height:36px;}
+.play {
+	background-color:#ff0;
+	padding:0 10; margin:0 10;
+	float:left;
+}
+.play a {
+	color:#000; font-size:16px;
+	white-space:nowrap;
+}
+.info {text-align:left;}
+.info img {
+	max-width:320px;
+	max-height:320px;
+}
+.bar2 {
+	background-color:rgba(0,0,0,0.1); margin:7; padding:10;
+	position:fixed;
+}
+.fengmian img {
+	max-width:90vw;
+}

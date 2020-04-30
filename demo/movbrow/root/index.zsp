@@ -1,0 +1,158 @@
+<title><%‘网站标题’%></title>
+<%
+如果不‘视频量’那么先
+	我的遍历目录、先
+		循环【‘视频目录量’】【次】先
+			‘视频目录‘次’’、
+		了。
+	了-配、\.(?i)(mp4|mpg|mpeg|mkv|wmv|avi|asf|webm|flv|f4v|rm|rmvb|dat|mp3)$、-路径、下代码
+		赋予视频量【主】以算术‘视频量’+1。
+		赋予视频‘视频量’【主】、视频‘视频量’标题【主】以‘参数栈’。
+		‘视频量’
+	上代码、-标题、-背后、
+	先
+		赋予代码以下代码
+			别名路径、号以参数1、参数2。
+			赋予视频‘号’封面【主】以‘路径’。
+		上代码。
+	了
+	-同名jpeg、‘代码’、-同名jpg、‘代码’、-同名JPG、‘代码’、-同名png、‘代码’、-同名gif、‘代码’、
+	-同名zs-note、下代码
+		别名zs、号以参数1、参数2。
+		别名路径以视频‘号’。
+		赋予目录2以我的目录、‘路径’。
+		加载‘zs’。
+		如果存在标题那么赋予视频‘号’标题【主】以‘标题’。
+	上代码、
+	-总装、下代码
+		别名号以参数2。
+		如果存在视频‘号’封面【主】那么返回。
+		别名标题以视频‘号’标题【主】。
+		别名视频以参数1。
+		赋予主名以我的主名、‘视频’。
+		循环【‘配图目录量’】【编】先
+			定义当、后缀以下代码
+				定义当、名以下代码
+					赋予路径以‘配图目录‘编’’/‘名’。
+					如果我的文件有‘路径’那么先
+						赋予视频‘号’封面【主】以‘路径’。
+						跳出。
+					了。
+				上代码。
+				当‘标题’.‘后缀’。
+				当‘主名’.‘后缀’。
+			上代码。
+			当png。
+			当PNG。
+			当jpg。
+		了。
+	上代码、
+	-见外、下代码
+		如果我的正则配、‘参数1’、\.(?i)(jpeg|jpg|png|gif|zs-note)$那么返回。
+		显示“忽略 ‘参数’”换行。
+	上代码。
+了。
+
+赋予框宽、图宽、图高以1、150。
+赋予项宽以算术‘图宽’+‘框宽’*2。
+赋予项高以算术‘图高’+‘框宽’*2。
+赋予图宽、图高、项宽、项高以‘图宽’px、‘图高’px、‘项宽’px、‘项高’px。
+%>
+<style>
+<%我的文件、1.css%>
+.item-1 {
+	width: <%‘项宽’%>;
+	height: <%‘项高’%>;
+}
+.item-2 {
+	width: <%‘项宽’%>;
+	height: <%‘项高’%>;
+	display:table-cell;
+}
+.item img {
+	max-width: <%‘图宽’%>;
+	max-height: <%‘图高’%>;
+	border:none;
+}
+</style>
+<script>
+<%我的文件、1.js%>
+</script>
+<div class=bar2>
+<%
+定义加链、参、文以下代码
+	“<div class=play><a href=‘参’>‘文’</a></div>”
+上代码。
+赋予4、5以5、4。
+循环【5】【次】先
+	赋予文.1以桌面。
+	赋予文.2以分叉‘次’先
+		2：全屏。
+		‘4’：控制面板。
+	了。
+	分叉‘次’先
+		1、2、3先
+			赋予文.2以‘文.2’播放。
+		了
+	了。
+	赋予文.3、号以分叉‘次’先
+		1、2先随机、rand了。
+		3先下集、next了。
+		‘5’先上集、back了。
+	了。
+	加链分叉‘次’先
+		1、2、3、‘5’先 "javascript:ajax__('play2.zsp?i=‘号’ 了。
+		1、2先 &t=‘文.1’‘文.2’ 了。
+		1、2、3、‘5’先 &noui=1')" 了。
+		‘4’：“"play2.zsp" target=_blank”。
+	了、‘文.1’‘文.3’‘文.2’。
+了。
+%>
+</div>
+<%循环【3】先<br>了%>
+<div id=list></div>
+<script>
+function item__(id, href, htm1, att) {
+	var d = new__("div");
+	d.className = "item";
+	d.id = id;
+	htm__(d,
+		'<a href="' + href + '" ' + att + '>' +
+		'<div class=item-1><div class=item-2>' +
+		htm1 +
+		'</div></div>' +
+		'</a>'
+		);
+	return d;
+}
+
+add__(item__('loading', 'javascript:', '<img src="loading.gif">'), id__("list"));
+
+var int_i_ = 1;
+var int_old_line_;
+var int_ = setInterval(function() {
+	var url = "get.zsp?i=" + int_i_;
+	ajax__(url, function(line) {
+		if("" == line || int_old_line_ == line)
+			return;
+		int_old_line_ = line;
+
+		var o = eval("(" + line + ")");
+		switch(o.type) {
+		case "x":
+			del__(id__("loading"));
+			clearInterval(int_);
+			int_old_line_ = undefined;
+			return;
+		case "no":
+			return;
+		}
+
+		ins__(item__(int_i_, 'show.zsp?i=' + o.id,
+			(o.img ? '<img src="get.zsp?c=img&i=' + o.id + '" title="' + o.title + '">' :
+			'<span class=txt>' + o.title + '</span>'),
+			'target=_blank'), id__("loading"));
+		int_i_++;
+	});
+}, 200);
+</script>
