@@ -7,13 +7,22 @@
 <style>
 <%我的文件、1.css%>
 </style>
+<script>
+<%我的文件、1.js%>
+function captu__() {
+	ajax__("captu.zsp?i=<%‘号’%>", function(htm) {
+		htm__(id__("fengmian"), htm);
+	});
+	return false;
+}
+</script>
 <div class="item2 item-1 item-2">
 <!-- <%‘视频‘号’’%> -->
+<div class=fengmian id=fengmian>
 <%
-如果存在封面那么
-	“<!-- ‘封面’ -->”换行
-	“<div class=fengmian><img src="get.zsp?c=img&i=‘号’"></div>”。
+如果存在封面那么“<img src="get.zsp?c=img&i=‘号’">”。
 %>
+</div>
 <div><span class="txt size2"><%‘标题’%></span></div>
 <div class=info>
 <div class=bar>
@@ -22,12 +31,14 @@
 	赋予文以分叉‘次’先
 		2：桌面。
 		3：桌面全屏。
-	了。赋予文以‘文’播放。
+	了播放。
 	“<div class=play><a href="play”分叉‘次’先
 		1先了。2、3：2。‘次’
 	了“.zsp?i=‘号’&t=‘文’" target=_blank>‘文’</a></div>”
 了
 %>
+</div><div class=bar>
+<div class=play><a href="javascript:" onclick="return captu__()">配图</a></div>
 </div>
 <%
 如果存在演员表那么

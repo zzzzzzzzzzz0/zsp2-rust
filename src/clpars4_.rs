@@ -96,11 +96,13 @@ pub fn i__(args:&Vec<String>, args2:&mut Vec<String>, gd:&zs_::code_::Opt_,
 						}
 						0
 					}, |_| 3);
+					true
 				}) {return 2}
 			}
 			"命令行帮助" => {
 				if !get__(q.clone(), |cp2| {
 					t_::add__(ret, gd, w.clone(), cp2.help__());
+					true
 				}) {return 2}
 			}
 			_ => {}
@@ -113,7 +115,7 @@ pub fn i__(args:&Vec<String>, args2:&mut Vec<String>, gd:&zs_::code_::Opt_,
 	t_::ierr__(ret2, args, &err)
 }
 
-fn get__(q:zs_::qv_::T_, f:impl FnMut(&clpars_::List_)) -> bool {
+fn get__(q:zs_::qv_::T_, f:impl FnMut(&clpars_::List_) -> bool) -> bool {
 	let args2 = &as_ref__!(q).args_;
 	let mut i2 = 0;
 	for i in args2.iter() {

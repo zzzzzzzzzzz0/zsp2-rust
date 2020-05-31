@@ -10,7 +10,7 @@ use actix_files::NamedFile;
 use std::{env};
 
 fn i__(gd:&zs_::code_::Opt_, q:zs_::qv_::T_, w:zs_::world_::T_, wm:&mut zs_::WorldMut_, ret:&mut zs_::result_::List_) -> zs_::Result2_ {
-	let mut args = as_ref__!(q).args2_.clone();
+	let mut args = as_ref__!(q).args_.to_vec__();
 	let mut args2 = vec![];
 	fn b__(args:&mut Vec<String>, args2:&mut Vec<String>) -> bool {
 		if args2.is_empty() {return true}
@@ -41,9 +41,9 @@ async fn index__(req: HttpRequest) -> impl Responder {
 		let mut body = String::new();
 		for i in v {
 			body.push_str(i);
-			body.push_str("<hr>");
+			body.push_str("<hr>\n");
 		}
-		body.push_str("未实现");
+		body.push_str("未实现\n");
 		bad__(body)
 	};
 	let namedfile__ = |path| {
@@ -55,22 +55,22 @@ async fn index__(req: HttpRequest) -> impl Responder {
 	let path = req.uri().path();
 	if path.ends_with(".zsp") || path.ends_with('/') {
 		let wm = || t_::ZSWM_.lock().unwrap();
-		let mut q = zs_::Qv_::new2(Some(t_::MAIN_QV_.clone()));
+		let q = zs_::qv_::t__(zs_::Qv_::new2(Some(t_::MAIN_QV_.clone())));
 		let src = if path.ends_with('/') {
 			[&path[1..], "index.zsp"].concat()
 		} else {path[1..].to_string()};
 		let mut src2 = String::new();
-		let ret = zs_::eval_::src__(&src, &mut src2, &mut q, &as_ref__!(t_::ZSW_.clone()), &mut wm().dbg_);
+		let ret = zs_::eval_::src__(&src, &mut src2, q.clone(), t_::ZSW_.clone(), &mut wm());
 		match ret {
 			Ok(()) => {
 				let mut my = zs_::def_::Item_::new("我的", zs_::def_::Val_::F(i__), core::usize::MAX, None);
 				my.objs_add__::<HttpRequest>(&req);
-				q.defs_.add__(my);
+				as_mut_ref__!(q).defs_.add__(my);
 
-				q.src_ = src;
+				as_mut_ref__!(q).src_ = src;
 				let mut ret2 = zs_::result_::List_::new();
 				let ret = zs_::eval_::hello2__(&src2, |it| {it.yuanyang_ = 1},
-					Default::default(), zs_::qv_::t__(q), t_::ZSW_.clone(), &mut wm(), &mut ret2);
+					Default::default(), q, t_::ZSW_.clone(), &mut wm(), &mut ret2);
 				match ret {
 					Ok(()) => {
 						let v = ret2.to_vec__();
@@ -104,6 +104,7 @@ async fn index__(req: HttpRequest) -> impl Responder {
 								}
 								return bad2__(&v)
 							}
+							0 => {}
 							_ => return bad2__(&v)
 						}
 						HttpResponse::Ok().content_type(content_type).body(body)
@@ -137,7 +138,6 @@ async fn main() -> std::io::Result<()> {
 	{
 		let main_q = || as_mut_ref__!(t_::MAIN_QV_);
 		main_q().name_.push("主".to_string());
-		main_q().val__("绑定地址", "127.0.0.1:8084");
 		main_q().defs_.val2__("我的", zs_::def_::Val_::F(i__), core::usize::MAX, None, None).unwrap();
 
 		let w = as_ref__!(t_::ZSW_).clone();
@@ -177,12 +177,13 @@ async fn main() -> std::io::Result<()> {
 			0
 		}, |_| 0);
 		if !conf_q.src_.is_empty() {
+			let conf_q2 = zs_::qv_::t__(conf_q.clone());
 			let mut src = String::new();
-			let ret = zs_::eval_::src__(&conf_q.clone().src_, &mut src, &mut conf_q, &w, &mut wm().dbg_);
+			let ret = zs_::eval_::src__(&conf_q.src_, &mut src, conf_q2.clone(), t_::ZSW_.clone(), &mut wm());
 			match ret {
 				Ok(()) => {
 					{
-						let args = &mut conf_q.args_;
+						let args = &mut as_mut_ref__!(conf_q2).args_;
 						args.clear();
 						for i in args2 {
 							if !args.is_empty() {
@@ -192,8 +193,7 @@ async fn main() -> std::io::Result<()> {
 						}
 					}
 					let mut ret2 = zs_::result_::List_::new();
-					if let Err((i, s, s2)) = t_::eval__(&src, zs_::qv_::t__(conf_q),
-							t_::ZSW_.clone(), &mut wm(), &mut ret2) {
+					if let Err((i, s, s2)) = t_::eval__(&src, conf_q2, t_::ZSW_.clone(), &mut wm(), &mut ret2) {
 						t_::errexit__(i, s, s2);
 					}
 				}
@@ -205,13 +205,18 @@ async fn main() -> std::io::Result<()> {
 			main_q().args_ = conf_q.args_;
 		}
 	}
+	let addr = t_::main_var__("绑定地址");
+	if addr.is_empty() {
+		//t_::exit__(0)
+		return Ok(())
+	}
 	HttpServer::new(|| {
 		App::new()
 			//.wrap(middleware::Logger::default())
 			.service(web::resource("/zsp-ver").to(|| async { env!("CARGO_PKG_VERSION") }))
 			.default_service(web::to(index__))
 	})
-	.bind(t_::main_var__("绑定地址"))?
+	.bind(addr)?
 	.run()
 	.await
 }

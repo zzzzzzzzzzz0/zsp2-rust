@@ -166,7 +166,7 @@ pub fn i__(args:&Vec<String>, args2:&mut Vec<String>, gd:&zs_::code_::Opt_,
 																s if s.starts_with("index.") => end = i2 - 1,
 																_ => {
 																	let i4 = i2 + i3;
-																	if end > i4 && end - i4 > 3 {
+																	if end > i4 && end - i4 > 6 {
 																		start = i2 + 1;
 																		break
 																	}
@@ -198,7 +198,6 @@ pub fn i__(args:&Vec<String>, args2:&mut Vec<String>, gd:&zs_::code_::Opt_,
 								}
 							}
 						}
-						q.args2_ = q.args_.to_vec__();
 						if o.bg_ {
 							ret.clear();
 						}

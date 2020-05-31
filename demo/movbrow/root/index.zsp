@@ -63,6 +63,7 @@
 .item-1 {
 	width: <%‘项宽’%>;
 	height: <%‘项高’%>;
+	font-size:4px; color:#000;
 }
 .item-2 {
 	width: <%‘项宽’%>;
@@ -91,9 +92,7 @@
 		‘4’：控制面板。
 	了。
 	分叉‘次’先
-		1、2、3先
-			赋予文.2以‘文.2’播放。
-		了
+		1、2、3、‘5’赋予文.2以‘文.2’播放。
 	了。
 	赋予文.3、号以分叉‘次’先
 		1、2先随机、rand了。
@@ -103,8 +102,8 @@
 	加链分叉‘次’先
 		1、2、3、‘5’先 "javascript:ajax__('play2.zsp?i=‘号’ 了。
 		1、2先 &t=‘文.1’‘文.2’ 了。
-		1、2、3、‘5’先 &noui=1')" 了。
-		‘4’：“"play2.zsp" target=_blank”。
+		1、2、3、‘5’ &noui=1')"。
+		‘4’“"play2.zsp" target=_blank”。
 	了、‘文.1’‘文.3’‘文.2’。
 了。
 %>
@@ -112,16 +111,16 @@
 <%循环【3】先<br>了%>
 <div id=list></div>
 <script>
-function item__(id, href, htm1, att) {
+function item__(id, href, htm1, htm2, att) {
 	var d = new__("div");
 	d.className = "item";
 	d.id = id;
 	htm__(d,
+		'<div class=item-1>' +
 		'<a href="' + href + '" ' + att + '>' +
-		'<div class=item-1><div class=item-2>' +
-		htm1 +
-		'</div></div>' +
-		'</a>'
+		'<div class=item-2>' + htm1 + '</div>' +
+		'</a>' +
+		(htm2 ? htm2 : '') + '</div>'
 		);
 	return d;
 }
@@ -148,10 +147,14 @@ var int_ = setInterval(function() {
 			return;
 		}
 
-		ins__(item__(int_i_, 'show.zsp?i=' + o.id,
-			(o.img ? '<img src="get.zsp?c=img&i=' + o.id + '" title="' + o.title + '">' :
-			'<span class=txt>' + o.title + '</span>'),
-			'target=_blank'), id__("loading"));
+		var htm1, htm2;
+		if(o.img) {
+			htm1 = '<img src="get.zsp?c=img&i=' + o.id + '">';
+			htm2 = o.title;
+		} else {
+			htm1 = '<span class=txt>' + o.title + '</span>';
+		}
+		ins__(item__(int_i_, 'show.zsp?i=' + o.id, htm1, htm2, 'target=_blank'), id__("loading"));
 		int_i_++;
 	});
 }, 200);

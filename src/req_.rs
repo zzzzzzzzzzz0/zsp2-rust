@@ -5,7 +5,7 @@ use std::{collections::HashMap};
 
 pub fn i__(args:&Vec<String>, args2:&mut Vec<String>, gd:&zs_::code_::Opt_,
 		q:zs_::qv_::T_, w:zs_::world_::T_, ret:&mut zs_::result_::List_) -> zs_::Result2_ {
-	if let Some(req) = &as_ref__!(q).objs__::<HttpRequest>(0) {
+	if let Some(req) = &as_ref__!(q).obj__::<HttpRequest>(0) {
 		let cp = clpars_::List_::new2(vec![
 			clpars_::Item_::new1z("参|餐"),
 			clpars_::Item_::new("url"),

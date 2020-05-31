@@ -55,27 +55,37 @@ pub fn i__(args:&Vec<String>, args2:&mut Vec<String>, gd:&zs_::code_::Opt_, q:zs
 					Err(e) => {err = e.to_string(); return 3}
 				}
 			}
-			"随机数" =>
-				match argv[0].parse::<u64>() {
-					Ok(min) => {
-						match argv[1].parse::<u64>() {
-							Ok(max) => {
-								let max = max + 1;
-								if min >= max {
-									err = [tag, &max.to_string(), "不大于", &min.to_string()].concat();
-									return 3
-								} else {
-									t_::add__(ret, gd, w.clone(), rand::thread_rng().gen_range(min, max))
+			"随机数" => {
+				fn gen__<F: std::str::FromStr + rand::distributions::uniform::SampleUniform +
+				std::fmt::Display + PartialOrd + std::ops::AddAssign>(argv:&[String], er:bool, is_i:bool,
+				gd:&zs_::code_::Opt_, w:zs_::world_::T_, ret:&mut zs_::result_::List_) -> Result<bool, String> {
+					match argv[0].parse::<F>() {
+						Ok(min) => {
+							match argv[1].parse::<F>() {
+								Ok(mut max) => {
+									//let max = max + 1;
+									if is_i {
+										if let Ok(i) = F::from_str("1") {
+											max += i;
+										}
+									}
+									if min >= max {
+										Err([&max.to_string(), "不大于", &min.to_string()].concat())
+									} else {
+										t_::add__(ret, gd, w, rand::thread_rng().gen_range(min, max));
+										Ok(true)
+									}
 								}
-							}
-							Err(e) => {
-								err = e.to_string();
-								return 3
+								Err(_) => if er {Err(argv[1].to_string())} else {Ok(false)}
 							}
 						}
+						Err(_) => if er {Err(argv[0].to_string())} else {Ok(false)}
 					}
-					Err(e) => {err = e.to_string(); return 3}
-				},
+				}
+				if let Ok(true) = gen__::<u64>(argv, false, true, gd, w.clone(), ret) {return 0}
+				if let Ok(true) = gen__::<i64>(argv, false, true, gd, w.clone(), ret) {return 0}
+				if let Err(e) = gen__::<f64>(argv, true, false, gd, w.clone(), ret) {err = e; return 3}
+			}
 			"环境变量" =>
 				if let Ok(s) = env::var(&argv[0]) {
 					t_::add__(ret, gd, w.clone(), s)

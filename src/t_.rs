@@ -10,7 +10,7 @@ lazy_static! {
 
 pub fn main_var__(name:&str) -> String {
 	let mut ret2 = zs_::result_::List_::new();
-	as_ref__!(MAIN_QV_).vars_.get__(name, false, &mut ret2, &mut zs_::result_::List_::new());
+	as_ref__!(MAIN_QV_).vars_.get__(name, false, true, &mut ret2, &mut zs_::result_::List_::new());
 	let v = ret2.to_vec__();
 	{if !v.is_empty() {&v[0]} else {""}}.to_string()
 }
