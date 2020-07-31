@@ -16,15 +16,19 @@
 
 加载lib/clpars4。
 调用‘命令行加回调’、
-	r|r1|r0、下原样
+	r|r1|r2|r0、下原样
 		运行“cargo run -- -zsp-”分支‘参数0’先
 			r：help。
 			先
 				管道堵执行reset。
-				“conf demo/”分支‘参数0’先
-					r1：movbrow。
-					lose。
-				了/conf.zs
+				“conf ”分支‘参数0’先
+					r1、r0先
+						demo/分支‘参数0’先
+							r1：movbrow。
+							lose。
+						了/conf.zs
+					了
+				了
 			了
 		了“ ‘参数’”上原样、a、、
 	t4、、0、下代码

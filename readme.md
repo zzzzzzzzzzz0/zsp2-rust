@@ -15,8 +15,10 @@ web framework 部分基于现行的 [actix.rs](https://actix.rs)，并借力
 
 ```bash
 $ git clone "https://github.com/zzzzzzzzzzz0/zhscript2-rust.git"
+$ git clone "https://github.com/zzzzzzzzzzz0/zs2-l4-rust.git"
 $ git clone "https://github.com/zzzzzzzzzzz0/zsp2-rust.git"
 $ cd zsp2-rust
+$ rustup override set nightly
 $ cargo run -- -zsp-conf demo/movbrow/conf.zs
 ```
 
@@ -24,11 +26,15 @@ $ cargo run -- -zsp-conf demo/movbrow/conf.zs
 
 ```
 1-/zzzzzzzzzzz4/video
-1-/zzzzzzzzzzz4/video-shot
-2-/opt5/disk/410p/zzzzzzzzzzz4/opt/opt/video
-3-/home/zzzzzzzzzzz/视频
-4-/home/zzzzzzzzzzz/Videos
-5-/home/zzzzzzzzzzz/ビデオ
+  /zzzzzzzzzzz4/video-shot (1
+2-/zzzzzzzzzzz6/zzzzzzzzzzz4/opt/opt/video
+3-/zzzzzzzzzzz6/zzzzzzzzzzz4/opt/opt/video2
+4-/zzzzzzzzzzz7/zzzzzzzzzzz4/opt/opt/video
+  /zzzzzzzzzzz7/zzzzzzzzzzz4/opt/opt/video-shot (2
+5-/zzzzzzzzzzz7/zzzzzzzzzzz4/opt/opt/video2
+6-‘~’/视频
+7-‘~’/Videos
+8-‘~’/ビデオ
 根 demo/movbrow/root
 绑定地址 127.0.0.1:8084
 ```

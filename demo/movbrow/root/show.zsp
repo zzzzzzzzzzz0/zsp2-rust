@@ -17,7 +17,6 @@ function captu__() {
 }
 </script>
 <div class="item2 item-1 item-2">
-<!-- <%‘视频‘号’’%> -->
 <div class=fengmian id=fengmian>
 <%
 如果存在封面那么“<img src="get.zsp?c=img&i=‘号’">”。
@@ -34,8 +33,8 @@ function captu__() {
 	了播放。
 	“<div class=play><a href="play”分叉‘次’先
 		1先了。2、3：2。‘次’
-	了“.zsp?i=‘号’&t=‘文’" target=_blank>‘文’</a></div>”
-了
+	了“.zsp?i=‘号’&t=‘文’" target=_blank>‘文’</a></div>”换行
+了。
 %>
 </div><div class=bar>
 <div class=play><a href="javascript:" onclick="return captu__()">配图</a></div>

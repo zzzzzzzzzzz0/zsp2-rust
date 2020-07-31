@@ -108,7 +108,7 @@
 了。
 %>
 </div>
-<%循环【3】先<br>了%>
+<%循环【3】<br>。%>
 <div id=list></div>
 <script>
 function item__(id, href, htm1, htm2, att) {

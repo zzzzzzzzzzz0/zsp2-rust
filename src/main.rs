@@ -6,11 +6,14 @@ mod t_;
 
 use zhscript2::{u_ as zs_, u2_::clpars_, as_mut_ref__, as_ref__};
 use actix_web::{/*middleware,*/ web, App, HttpRequest, HttpServer, HttpResponse, Responder, http::header};
-use actix_files::NamedFile;
+use actix_files::{NamedFile, Files};
 use std::{env};
 
-fn i__(gd:&zs_::code_::Opt_, q:zs_::qv_::T_, w:zs_::world_::T_, wm:&mut zs_::WorldMut_, ret:&mut zs_::result_::List_) -> zs_::Result2_ {
-	let mut args = as_ref__!(q).args_.to_vec__();
+fn i__(env:&zs_::code_::Env_, wm:&mut zs_::WorldMut_, ret:&mut zs_::result_::List_) -> zs_::Result2_ {
+	if wm.dbg_.arg_ {
+		wm.dbg_.arg__(&as_ref__!(env.q).args_);
+	}
+	let mut args = as_ref__!(env.q).args_.to_vec__();
 	let mut args2 = vec![];
 	fn b__(args:&mut Vec<String>, args2:&mut Vec<String>) -> bool {
 		if args2.is_empty() {return true}
@@ -20,13 +23,13 @@ fn i__(gd:&zs_::code_::Opt_, q:zs_::qv_::T_, w:zs_::world_::T_, wm:&mut zs_::Wor
 		}
 		false
 	};
-	req_::i__(&args, &mut args2, gd, q.clone(), w.clone(), ret)?;
+	req_::i__(&args, &mut args2, env, ret)?;
 	if b__(&mut args, &mut args2) {return zs_::ok__()}
-	file_::i__(&args, &mut args2, gd, q.clone(), w.clone(), wm, ret)?;
+	file_::i__(&args, &mut args2, env, wm, ret)?;
 	if b__(&mut args, &mut args2) {return zs_::ok__()}
-	clpars4_::i__(&args, &mut args2, gd, q.clone(), w.clone(), wm, ret)?;
+	clpars4_::i__(&args, &mut args2, env, wm, ret)?;
 	if b__(&mut args, &mut args2) {return zs_::ok__()}
-	other_::i__(&args, &mut args2, gd, q, w, wm, ret)?;
+	other_::i__(&args, &mut args2, env, wm, ret)?;
 	if b__(&mut args, &mut args2) {return zs_::ok__()}
 	t_::ierr1__(&args, "!")
 }
@@ -59,8 +62,9 @@ async fn index__(req: HttpRequest) -> impl Responder {
 		let src = if path.ends_with('/') {
 			[&path[1..], "index.zsp"].concat()
 		} else {path[1..].to_string()};
+		zs_::eval_::ok_src__(&src, q.clone(), t_::ZSW_.clone(), &mut wm());
 		let mut src2 = String::new();
-		let ret = zs_::eval_::src__(&src, &mut src2, q.clone(), t_::ZSW_.clone(), &mut wm());
+		let ret = zs_::eval_::src__(&mut src2, q.clone(), t_::ZSW_.clone(), &mut wm());
 		match ret {
 			Ok(()) => {
 				let mut my = zs_::def_::Item_::new("我的", zs_::def_::Val_::F(i__), core::usize::MAX, None);
@@ -70,7 +74,7 @@ async fn index__(req: HttpRequest) -> impl Responder {
 				as_mut_ref__!(q).src_ = src;
 				let mut ret2 = zs_::result_::List_::new();
 				let ret = zs_::eval_::hello2__(&src2, |it| {it.yuanyang_ = 1},
-					Default::default(), q, t_::ZSW_.clone(), &mut wm(), &mut ret2);
+					&zs_::code_::Env_::new(q, t_::ZSW_.clone()), &mut wm(), &mut ret2);
 				match ret {
 					Ok(()) => {
 						let v = ret2.to_vec__();
@@ -135,6 +139,8 @@ async fn main() -> std::io::Result<()> {
 		kws.add__("<%", zs_::keyword_::Id_::EndYuanyang);
 		kws.add2__("%>", vec![zs_::keyword_::Id_::Jvhao, zs_::keyword_::Id_::BeginYuanyang]);
 	}
+	let addr;
+	let mut use_ret2 = false;
 	{
 		let main_q = || as_mut_ref__!(t_::MAIN_QV_);
 		main_q().name_.push("主".to_string());
@@ -156,30 +162,49 @@ async fn main() -> std::io::Result<()> {
 			}
 		}
 		let mut args2 = vec![];
-		let cp = clpars_::List_::new3(vec![
-			clpars_::Item_::new3("-zsp-addr", 1, "绑定地址"),
-			clpars_::Item_::new3("-zsp-conf", 1, "由配置文件"),
-			clpars_::Item_::new("-zsp-help"),
-			clpars_::Item_::new0(),
-		], concat!("ZhServerPage2 v", env!("CARGO_PKG_VERSION"), "\n"));
-		cp.for__(&mut conf_q.args_.to_vec__().into_iter(), |tag, argv, _item, _i3| {
-			match tag {
-				"-zsp-addr" => main_q().val__("绑定地址", &argv[0]),
-				"-zsp-conf" => conf_q.src_ = argv[0].to_string(),
-				"-zsp-help" => {
-					print!("{}", cp.help__());
-					if w.clone().hello2__(&mut vec!["-zhscript-help".to_string()].into_iter(),
-						false, false, false, &mut conf_q, &mut wm()).is_err() {}
-					t_::exit__(251);
+		const HELP:&str = "-zsp-help";
+		{
+			let cp = clpars_::List_::new3(vec![
+				clpars_::Item_::new3("-zsp-addr", 1, "绑定地址"),
+				clpars_::Item_::new3("-zsp-conf", 1, "由配置文件"),
+				clpars_::Item_::new(HELP),
+				clpars_::Item_::new0(),
+			], concat!("ZhServerPage2 v", env!("CARGO_PKG_VERSION"), "\n"));
+			/*let argv = vec![
+				concat!("ZhServerPage2 v", env!("CARGO_PKG_VERSION"), "\n"),
+				"-zsp-addr", "绑定地址", "1", "",
+				"-zsp-conf", "由配置文件", "1", "",
+				HELP, "", "0", "",
+				"", "", "1", "",
+			];
+			*/
+			cp.for__(&mut conf_q.args_.to_vec__().into_iter(), |tag, argv, _item, _i3| {
+				match tag {
+					"-zsp-addr" => main_q().val__("绑定地址", &argv[0]),
+					"-zsp-conf" => conf_q.src_ = argv[0].to_string(),
+					"-zsp-help" => {
+						print!("{}", cp.help__());
+						if w.clone().hello2__(&mut vec![zs_::world_::HELP_.to_string()].into_iter(),
+							false, false, false, &mut conf_q, &mut wm()).is_err() {}
+						t_::exit__(251);
+					}
+					_ => args2.push(tag.to_string())
 				}
-				_ => args2.push(tag.to_string())
-			}
-			0
-		}, |_| 0);
+				0
+			}, |_| 0);
+		}
+		let mut ret2 = zs_::result_::List_::new();
 		if !conf_q.src_.is_empty() {
 			let conf_q2 = zs_::qv_::t__(conf_q.clone());
 			let mut src = String::new();
-			let ret = zs_::eval_::src__(&conf_q.src_, &mut src, conf_q2.clone(), t_::ZSW_.clone(), &mut wm());
+			let ret;
+			if wm().cfg_.src_is_file_ {
+				zs_::eval_::ok_src__(&conf_q.src_, conf_q2.clone(), t_::ZSW_.clone(), &mut wm());
+				ret = zs_::eval_::src__(&mut src, conf_q2.clone(), t_::ZSW_.clone(), &mut wm());
+			} else {
+				src.push_str(&conf_q.src_);
+				ret = zs_::ok__()
+			}
 			match ret {
 				Ok(()) => {
 					{
@@ -192,10 +217,11 @@ async fn main() -> std::io::Result<()> {
 							args.add__(i)
 						}
 					}
-					let mut ret2 = zs_::result_::List_::new();
-					if let Err((i, s, s2)) = t_::eval__(&src, conf_q2, t_::ZSW_.clone(), &mut wm(), &mut ret2) {
+					if let Err((i, s, s2)) = t_::eval__(&src,
+					&zs_::code_::Env_::new(conf_q2, t_::ZSW_.clone()), &mut wm(), &mut ret2) {
 						t_::errexit__(i, s, s2);
 					}
+					use_ret2 = true;
 				}
 				Err((i, s, s2)) => {
 					t_::errexit__(i, s, s2);
@@ -204,17 +230,29 @@ async fn main() -> std::io::Result<()> {
 		} else {
 			main_q().args_ = conf_q.args_;
 		}
+		addr = t_::main_var__("绑定地址");
+		if addr.is_empty() {
+			if use_ret2 {
+				for i in ret2.to_vec__() {
+					println!("{}", i);
+				}
+			} else {
+				println!("{}", HELP);
+			}
+			return Ok(())
+		}
 	}
-	let addr = t_::main_var__("绑定地址");
-	if addr.is_empty() {
-		//t_::exit__(0)
-		return Ok(())
-	}
-	HttpServer::new(|| {
+	HttpServer::new(move || {
+		let app =
 		App::new()
 			//.wrap(middleware::Logger::default())
 			.service(web::resource("/zsp-ver").to(|| async { env!("CARGO_PKG_VERSION") }))
-			.default_service(web::to(index__))
+			;
+		if use_ret2 {
+			app.default_service(web::to(index__))
+		} else {
+			app.service(Files::new("/", ".").show_files_listing())
+		}
 	})
 	.bind(addr)?
 	.run()
