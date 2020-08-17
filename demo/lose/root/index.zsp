@@ -15,9 +15,12 @@
 		}
 		</style>
 	了。
-	先“
+	先“<div style="border-right-style:dashed;
+					border-bottom-style:dashed;
+					width:120px; height:40px;">
 		<a href="?ver=碑">碑式</a> &nbsp; &nbsp; 
-		<a href="?ver=红榜">红榜式</a><hr><br><br>
+		<a href="?ver=红榜">红榜式</a>
+		</div><br><br>
 	”了
 了。
 

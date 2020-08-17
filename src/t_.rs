@@ -1,15 +1,11 @@
-use zhscript2::{u_ as zs_, as_ref__};
+use zhscript2::{u_ as zs_, as_ref__, as_mut_ref__};
 use zs2_l4_;
-use std::{process, sync::Mutex};
+use std::{process, };
 use lazy_static::*;
 
 lazy_static! {
-	pub static ref ZSW_: zs_::world_::T_ =
-		//zs_::world_::t__(zs_::World_::new())
-		zs2_l4_::i_::w__()
-		;
-	pub static ref ZSWM_:Mutex<zs_::WorldMut_> = Mutex::new(Default::default());
-	pub static ref MAIN_QV_: zs_::qv_::T_ = zs_::qv_::t__(zs_::Qv_::new2(Some(as_ref__!(ZSW_).top_q_.clone())));
+	pub static ref ZSW_: zs_::world_::T_ = zs2_l4_::i_::w__();
+	pub static ref MAIN_QV_: zs_::qv_::T_ = zs_::t__(zs_::Qv_::new3("主", Some(as_ref__!(ZSW_).top_q_.clone())));
 }
 
 pub fn main_var__(name:&str) -> String {
@@ -19,21 +15,16 @@ pub fn main_var__(name:&str) -> String {
 	{if !v.is_empty() {&v[0]} else {""}}.to_string()
 }
 
-pub fn add__<S: ToString>(ret: &mut zs_::result_::List_, env:&zs_::code_::Env_, s: S) {
+pub fn add__<S: ToString>(env:&zs_::code_::Env_, s: S) {
+	let mut ret = as_mut_ref__!(env.ret);
 	if env.gd.vals_ && !ret.is_empty() {
-		as_ref__!(env.w).dunhao__(ret)
+		as_ref__!(env.w).dunhao__(&mut ret)
 	}
 	ret.add__(s)
 }
 
-pub fn eval__(src:&str, env:&zs_::code_::Env_, wm:&mut zs_::WorldMut_, ret: &mut zs_::result_::List_) -> zs_::Result2_ {
-	zs_::eval_::hello2__(src, |_| {}, env, wm, ret)
-}
-
-pub fn env2__() -> (zs_::result_::List_, zs_::code_::Env_<'static>, /*&'static mut zs_::WorldMut_*/) {
-	(zs_::result_::List_::new(),
-		zs_::code_::Env_::new(zs_::qv_::t__(zs_::Qv_::new2(Some(MAIN_QV_.clone()))), ZSW_.clone()),
-		/*&mut ZSWM_.lock().unwrap()*/)
+pub fn eval__(src:&str, env:&zs_::code_::Env_) -> zs_::Result2_ {
+	zs_::eval_::hello2__(src, |_| {}, env)
 }
 
 pub fn exit__(i:i32) {

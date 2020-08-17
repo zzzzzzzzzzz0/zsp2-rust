@@ -3,7 +3,7 @@ use super::{t_};
 use actix_web::{HttpRequest};
 use std::{collections::HashMap};
 
-pub fn i__(args:&Vec<String>, args2:&mut Vec<String>, env:&zs_::code_::Env_, ret:&mut zs_::result_::List_) -> zs_::Result2_ {
+pub fn i__(args:&Vec<String>, args2:&mut Vec<String>, env:&zs_::code_::Env_) -> zs_::Result2_ {
 	if let Some(req) = &as_ref__!(env.q).obj__::<HttpRequest>(0) {
 		let cp = clpars_::List_::new2(vec![
 			clpars_::Item_::new1z("参|餐"),
@@ -14,15 +14,15 @@ pub fn i__(args:&Vec<String>, args2:&mut Vec<String>, env:&zs_::code_::Env_, ret
 				"参" | "餐" => {
 					let s = req.query_string();
 					if argv.is_empty() {
-						t_::add__(ret, env, s)
+						t_::add__(env, s)
 					} else {
 						let hm: HashMap<_, _> = url::form_urlencoded::parse(s.as_bytes()).into_owned().collect();
 						for i in argv {
-							t_::add__(ret, env, if let Some(s4) = hm.get(i) {s4} else {""})
+							t_::add__(env, if let Some(s4) = hm.get(i) {s4} else {""})
 						}
 					}
 				}
-				"url" => t_::add__(ret, env, req.uri()),
+				"url" => t_::add__(env, req.uri()),
 				_ => {}
 			}
 			0

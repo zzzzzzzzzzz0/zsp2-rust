@@ -33,9 +33,9 @@ text/html; charset=utf-8、。
 	了。
 赋予命令以“‘ffmpeg’ -ss ‘位置’ -t 1 -i "‘视频’" -r 1/20 -an -q:v 2 -f image2 -update 1 "‘图’" -y”。
 显示‘命令’换行。
-赋予错以执行‘命令’先解释‘env’了、-堵错。
+赋予错以执行‘命令’先解释‘env’了（、-堵错）。
 如果‘错’那么先
-	“<span class=txt>‘错’</span>”。
+	“<span class=txt>发生错 ‘错’</span>”。
 	返回。
 了。
 赋予视频‘号’封面【主】以‘图’。

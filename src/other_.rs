@@ -1,22 +1,16 @@
-use zhscript2::{u_::{self as zs_, }, u2_::clpars_, as_ref__};
+use zhscript2::{u_::{self as zs_, }, u2_::clpars_, as_ref__, as_mut_ref__};
 use super::{t_};
-use std::{env, thread, time::Duration, io::{BufReader, BufRead}, process::ChildStdout};
+use std::{env, thread, time::Duration};
 use regex::Regex;
 use rand::Rng;
 
-pub fn i__(args:&Vec<String>, args2:&mut Vec<String>,
-		env:&zs_::code_::Env_, wm:&mut zs_::WorldMut_, ret:&mut zs_::result_::List_) -> zs_::Result2_ {
+pub fn i__(args:&Vec<String>, args2:&mut Vec<String>, env:&zs_::code_::Env_) -> zs_::Result2_ {
 	let mut err = String::new();
-	let f__ = |ret2| {
-		if let Err((i, s, s2)) = ret2 {eprintln!("{} {} {}", i, s, s2); return true}
-		false
-	};
 	let cp = clpars_::List_::new2(vec![
 		clpars_::Item_::new2cz("正则配", 2),
 		clpars_::Item_::new2c("正则代", 3),
 		clpars_::Item_::new2c("随机数", 2),
 		clpars_::Item_::new2c("环境变量", 1),
-		clpars_::Item_::new1z("程序1 | 程序2"),
 		clpars_::Item_::new2c("等待", 1),
 	]);
 	let i = cp.for__(&mut args.clone().into_iter(), |tag, argv, _item, _i3| {
@@ -28,7 +22,7 @@ pub fn i__(args:&Vec<String>, args2:&mut Vec<String>,
 						for idx in 0..end {
 							let i = &argv[idx];
 							if re.is_match(i) {
-								t_::add__(ret, env, "1");
+								t_::add__(env, "1");
 								return 0
 							}
 						},
@@ -41,16 +35,17 @@ pub fn i__(args:&Vec<String>, args2:&mut Vec<String>,
 						let txt = &argv[0];
 						let src = &argv[2];
 						for cm in re.captures_iter(txt) {
-							let mut q = zs_::Qv_::new2(Some(env.q.clone()));
-							let args = &mut q.args_;
-							for idx in 1..cm.len() {
-								if !args.is_empty() {
-									as_ref__!(env.w).dunhao__(args);
+							let q = zs_::Qv_::new2(Some(env.q.clone()));
+							{
+								let mut args = as_mut_ref__!(q.args_);
+								for idx in 1..cm.len() {
+									if !args.is_empty() {
+										as_ref__!(env.w).dunhao__(&mut args);
+									}
+									args.add__(&cm[idx]);
 								}
-								args.add__(&cm[idx]);
 							}
-							if let Err((i, s, s2)) = t_::eval__(&src,
-							&zs_::code_::Env_::new2(zs_::qv_::t__(q), env), wm, ret) {
+							if let Err((i, s, s2)) = t_::eval__(&src, &zs_::code_::Env_::new2(zs_::t__(q), env)) {
 								t_::err__(i, s, s2, &mut err);
 								return 3
 							}
@@ -62,7 +57,7 @@ pub fn i__(args:&Vec<String>, args2:&mut Vec<String>,
 			"随机数" => {
 				fn gen__<F: std::str::FromStr + rand::distributions::uniform::SampleUniform +
 				std::fmt::Display + PartialOrd + std::ops::AddAssign>(argv:&[String], er:bool, is_i:bool,
-				env:&zs_::code_::Env_, ret:&mut zs_::result_::List_) -> Result<bool, String> {
+				env:&zs_::code_::Env_) -> Result<bool, String> {
 					match argv[0].parse::<F>() {
 						Ok(min) => {
 							match argv[1].parse::<F>() {
@@ -76,7 +71,7 @@ pub fn i__(args:&Vec<String>, args2:&mut Vec<String>,
 									if min >= max {
 										Err([&max.to_string(), "不大于", &min.to_string()].concat())
 									} else {
-										t_::add__(ret, env, rand::thread_rng().gen_range(min, max));
+										t_::add__(env, rand::thread_rng().gen_range(min, max));
 										Ok(true)
 									}
 								}
@@ -86,67 +81,14 @@ pub fn i__(args:&Vec<String>, args2:&mut Vec<String>,
 						Err(_) => if er {Err(argv[0].to_string())} else {Ok(false)}
 					}
 				}
-				if let Ok(true) = gen__::<u64>(argv, false, true, env, ret) {return 0}
-				if let Ok(true) = gen__::<i64>(argv, false, true, env, ret) {return 0}
-				if let Err(e) = gen__::<f64>(argv, true, false, env, ret) {err = e; return 3}
+				if let Ok(true) = gen__::<u64>(argv, false, true, env) {return 0}
+				if let Ok(true) = gen__::<i64>(argv, false, true, env) {return 0}
+				if let Err(e) = gen__::<f64>(argv, true, false, env) {err = e; return 3}
 			}
 			"环境变量" =>
 				if let Ok(s) = env::var(&argv[0]) {
-					t_::add__(ret, env, s)
+					t_::add__(env, s)
 				},
-			"程序1" => {
-				let mut argv = argv.to_vec();
-				thread::spawn(move || {
-					let (mut ret, env2, /*wm*/) = t_::env2__();
-					let wm = &mut t_::ZSWM_.lock().unwrap();
-					let over_src = argv.remove(0);
-					let exec = zhscript2::exec_::Item_::new(&as_ref__!(env2.w).kws_);
-					if f__(exec.hello2__(argv, &env2, wm, &mut ret)) {return}
-					if f__(t_::eval__(&over_src, &env2, wm, &mut ret)) {return}
-				});
-			}
-			"程序2" => {
-				let mut argv = argv.to_vec();
-				let over_src = argv.remove(0);
-				let exec = zhscript2::exec_::Item_::new(&as_ref__!(env.w).kws_);
-				if let Err((i, s, s2)) = exec.hello2__(argv, env, wm, ret) {
-					t_::err__(i, s, s2, &mut err);
-					return 3
-				}
-				match exec.obj__(&ret, 0, |obj, _ret2, _end| {
-					if let Some(mut stdout) = obj.o_.as_mut() {
-						let mut stdout = BufReader::new(stdout);
-						/*thread::spawn(move || {
-							let mut s = String::new();
-							loop {
-								match stdout.read_line(&mut s) {
-									Ok(siz) => {
-										if siz == 0 {
-											let (mut ret, env2, /*wm*/) = t_::env2__();
-											let wm = &mut t_::ZSWM_.lock().unwrap();
-											if f__(t_::eval__(&over_src, &env2, wm, &mut ret)) {}
-											break
-										}
-									}
-									Err(e) => eprintln!("{}", e)
-								}
-							}
-						});
-						return zs_::ok__()*/
-					}
-					zs_::result2_::err2__("! stdout")
-				}) {
-					Some(Ok(_)) => {}
-					Some(Err((i, s, s2))) => {
-						t_::err__(i, s, s2, &mut err);
-						return 3
-					}
-					None => {
-						err = "须有 -被动者2".to_string();
-						return 3
-					}
-				}
-			}
 			"等待" =>
 				match argv[0].parse::<f32>() {
 					Ok(i) =>

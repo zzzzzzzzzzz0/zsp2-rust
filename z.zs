@@ -16,18 +16,25 @@
 
 加载lib/clpars4。
 调用‘命令行加回调’、
-	r|r1|r2|r0、下原样
-		运行“cargo run -- -zsp-”分支‘参数0’先
+	r|r1|r2|r0|d1|d2|d3、下原样
+		运行分支‘参数0’先
+			d3“RUST_BACKTRACE=1 ”。
+		了“rust.zs2 ---- r -- ”分支‘参数0’先
+			d1“-zhscript-d-bp-r_v-”。
+			d2“-zhscript-d-tree”。
+			d3“-zhscript-d-lc”。
+		了“ -zsp-”分支‘参数0’先
 			r：help。
 			先
 				管道堵执行reset。
 				“conf ”分支‘参数0’先
-					r1、r0先
+					r1、r0、d1先
 						demo/分支‘参数0’先
-							r1：movbrow。
-							lose。
+							movbrow。
+							r0：lose。
 						了/conf.zs
-					了
+					了。
+					d3：/zzzzzzzzzzz4/home/zzzzzzzzzzz/test/rust-zsp/3.zs。
 				了
 			了
 		了“ ‘参数’”上原样、a、、

@@ -1,6 +1,7 @@
 mod req_;
 mod file_;
 mod clpars4_;
+mod prgm_;
 mod other_;
 mod t_;
 
@@ -9,11 +10,16 @@ use actix_web::{/*middleware,*/ web, App, HttpRequest, HttpServer, HttpResponse,
 use actix_files::{NamedFile, Files};
 use std::{env};
 
-fn i__(env:&zs_::code_::Env_, wm:&mut zs_::WorldMut_, ret:&mut zs_::result_::List_) -> zs_::Result2_ {
-	if wm.dbg_.arg_ {
-		wm.dbg_.arg__(&as_ref__!(env.q).args_);
+fn i__(env:&zs_::code_::Env_) -> zs_::Result2_ {
+	let mut args;
+	{
+		let q = as_ref__!(env.q);
+		let a = as_ref__!(q.args_);
+		if as_ref__!(env.w).dbg_.arg_ {
+			as_ref__!(env.w).dbg_.arg__(&a);
+		}
+		args = a.to_vec__();
 	}
-	let mut args = as_ref__!(env.q).args_.to_vec__();
 	let mut args2 = vec![];
 	fn b__(args:&mut Vec<String>, args2:&mut Vec<String>) -> bool {
 		if args2.is_empty() {return true}
@@ -23,14 +29,11 @@ fn i__(env:&zs_::code_::Env_, wm:&mut zs_::WorldMut_, ret:&mut zs_::result_::Lis
 		}
 		false
 	};
-	req_::i__(&args, &mut args2, env, ret)?;
-	if b__(&mut args, &mut args2) {return zs_::ok__()}
-	file_::i__(&args, &mut args2, env, wm, ret)?;
-	if b__(&mut args, &mut args2) {return zs_::ok__()}
-	clpars4_::i__(&args, &mut args2, env, wm, ret)?;
-	if b__(&mut args, &mut args2) {return zs_::ok__()}
-	other_::i__(&args, &mut args2, env, wm, ret)?;
-	if b__(&mut args, &mut args2) {return zs_::ok__()}
+	req_	::i__(&args, &mut args2, env)?; if b__(&mut args, &mut args2) {return zs_::ok__()}
+	file_	::i__(&args, &mut args2, env)?; if b__(&mut args, &mut args2) {return zs_::ok__()}
+	clpars4_::i__(&args, &mut args2, env)?; if b__(&mut args, &mut args2) {return zs_::ok__()}
+	prgm_	::i__(&args, &mut args2, env)?; if b__(&mut args, &mut args2) {return zs_::ok__()}
+	other_	::i__(&args, &mut args2, env)?; if b__(&mut args, &mut args2) {return zs_::ok__()}
 	t_::ierr1__(&args, "!")
 }
 
@@ -57,14 +60,13 @@ async fn index__(req: HttpRequest) -> impl Responder {
 	};
 	let path = req.uri().path();
 	if path.ends_with(".zsp") || path.ends_with('/') {
-		let wm = || t_::ZSWM_.lock().unwrap();
-		let q = zs_::qv_::t__(zs_::Qv_::new2(Some(t_::MAIN_QV_.clone())));
+		let q = zs_::t__(zs_::Qv_::new2(Some(t_::MAIN_QV_.clone())));
 		let src = if path.ends_with('/') {
 			[&path[1..], "index.zsp"].concat()
 		} else {path[1..].to_string()};
-		zs_::eval_::ok_src__(&src, q.clone(), t_::ZSW_.clone(), &mut wm());
+		zs_::eval_::ok_src__(&src, q.clone(), t_::ZSW_.clone());
 		let mut src2 = String::new();
-		let ret = zs_::eval_::src__(&mut src2, q.clone(), t_::ZSW_.clone(), &mut wm());
+		let ret = zs_::eval_::src__(&mut src2, q.clone(), t_::ZSW_.clone());
 		match ret {
 			Ok(()) => {
 				let mut my = zs_::def_::Item_::new("我的", zs_::def_::Val_::F(i__), core::usize::MAX, None);
@@ -72,12 +74,12 @@ async fn index__(req: HttpRequest) -> impl Responder {
 				as_mut_ref__!(q).defs_.add__(my);
 
 				as_mut_ref__!(q).src_ = src;
-				let mut ret2 = zs_::result_::List_::new();
+				let ret2 = zs_::t__(zs_::result_::List_::new());
 				let ret = zs_::eval_::hello2__(&src2, |it| {it.yuanyang_ = 1},
-					&zs_::code_::Env_::new(q, t_::ZSW_.clone()), &mut wm(), &mut ret2);
+					&zs_::code_::Env_::new(q, t_::ZSW_.clone(), ret2.clone()));
 				match ret {
 					Ok(()) => {
-						let v = ret2.to_vec__();
+						let v = as_ref__!(ret2).to_vec__();
 						match v.len() {
 							1 => body = v[0].to_string(),
 							2 => match v[0].as_str() {
@@ -134,8 +136,10 @@ async fn main() -> std::io::Result<()> {
 	/*std::env::set_var("RUST_LOG", "actix_web=info");
 	env_logger::init();*/
 
+	let w = || as_ref__!(t_::ZSW_);
+	let wm = || as_mut_ref__!(t_::ZSW_);
 	{
-		let kws = &mut as_mut_ref__!(t_::ZSW_).kws_;
+		let kws = &mut wm().kws_;
 		kws.add__("<%", zs_::keyword_::Id_::EndYuanyang);
 		kws.add2__("%>", vec![zs_::keyword_::Id_::Jvhao, zs_::keyword_::Id_::BeginYuanyang]);
 	}
@@ -143,20 +147,23 @@ async fn main() -> std::io::Result<()> {
 	let mut use_ret2 = false;
 	{
 		let main_q = || as_mut_ref__!(t_::MAIN_QV_);
-		main_q().name_.push("主".to_string());
 		main_q().defs_.val2__("我的", zs_::def_::Val_::F(i__), core::usize::MAX, None, None).unwrap();
 
-		let w = as_ref__!(t_::ZSW_).clone();
-		let wm = || t_::ZSWM_.lock().unwrap();
 		let mut conf_q = zs_::Qv_::new2(Some(t_::MAIN_QV_.clone()));
 		{
-			let ret = w.clone().hello2__(&mut env::args(), true, false, false, &mut conf_q, &mut wm());
+			let ret = zs_::world_::clpars__(&mut wm(), &mut env::args(),
+				true, false, false, &mut conf_q);
 			match ret {
 				Ok(()) => {
-					let ret = w.ret__(ret);
+					let ret = w().ret__(ret);
 					if ret != 0 {
 						t_::exit__(ret);
 					}
+
+					let top_q = &w().top_q_;
+					let mut top_q = as_mut_ref__!(top_q);
+					top_q.val__("外壳", &w().cfg_.shl_);
+					top_q.val__("窗口", "linux");
 				}
 				Err((i, s, s2)) => t_::errexit__(i, s, s2),
 			}
@@ -178,14 +185,16 @@ async fn main() -> std::io::Result<()> {
 				"", "", "1", "",
 			];
 			*/
-			cp.for__(&mut conf_q.args_.to_vec__().into_iter(), |tag, argv, _item, _i3| {
+			let v = as_ref__!(conf_q.args_).to_vec__();
+			cp.for__(&mut v.into_iter(), |tag, argv, _item, _i3| {
 				match tag {
 					"-zsp-addr" => main_q().val__("绑定地址", &argv[0]),
 					"-zsp-conf" => conf_q.src_ = argv[0].to_string(),
 					"-zsp-help" => {
 						print!("{}", cp.help__());
-						if w.clone().hello2__(&mut vec![zs_::world_::HELP_.to_string()].into_iter(),
-							false, false, false, &mut conf_q, &mut wm()).is_err() {}
+						if zs_::world_::clpars__(&mut wm(),
+							&mut vec![zs_::world_::HELP_.to_string()].into_iter(),
+							false, false, false, &mut conf_q).is_err() {}
 						t_::exit__(251);
 					}
 					_ => args2.push(tag.to_string())
@@ -193,14 +202,14 @@ async fn main() -> std::io::Result<()> {
 				0
 			}, |_| 0);
 		}
-		let mut ret2 = zs_::result_::List_::new();
+		let ret2 = zs_::t__(zs_::result_::List_::new());
 		if !conf_q.src_.is_empty() {
-			let conf_q2 = zs_::qv_::t__(conf_q.clone());
+			let conf_q2 = zs_::t__(conf_q.clone());
 			let mut src = String::new();
 			let ret;
-			if wm().cfg_.src_is_file_ {
-				zs_::eval_::ok_src__(&conf_q.src_, conf_q2.clone(), t_::ZSW_.clone(), &mut wm());
-				ret = zs_::eval_::src__(&mut src, conf_q2.clone(), t_::ZSW_.clone(), &mut wm());
+			if w().cfg_.src_is_file_ {
+				zs_::eval_::ok_src__(&conf_q.src_, conf_q2.clone(), t_::ZSW_.clone());
+				ret = zs_::eval_::src__(&mut src, conf_q2.clone(), t_::ZSW_.clone());
 			} else {
 				src.push_str(&conf_q.src_);
 				ret = zs_::ok__()
@@ -208,17 +217,18 @@ async fn main() -> std::io::Result<()> {
 			match ret {
 				Ok(()) => {
 					{
-						let args = &mut as_mut_ref__!(conf_q2).args_;
+						let conf_q2 = as_ref__!(conf_q2);
+						let args = &mut as_mut_ref__!(conf_q2.args_);
 						args.clear();
 						for i in args2 {
 							if !args.is_empty() {
-								w.dunhao__(args)
+								w().dunhao__(args)
 							}
 							args.add__(i)
 						}
 					}
 					if let Err((i, s, s2)) = t_::eval__(&src,
-					&zs_::code_::Env_::new(conf_q2, t_::ZSW_.clone()), &mut wm(), &mut ret2) {
+					&zs_::code_::Env_::new(conf_q2, t_::ZSW_.clone(), ret2.clone())) {
 						t_::errexit__(i, s, s2);
 					}
 					use_ret2 = true;
@@ -233,7 +243,7 @@ async fn main() -> std::io::Result<()> {
 		addr = t_::main_var__("绑定地址");
 		if addr.is_empty() {
 			if use_ret2 {
-				for i in ret2.to_vec__() {
+				for i in as_ref__!(ret2).to_vec__() {
 					println!("{}", i);
 				}
 			} else {

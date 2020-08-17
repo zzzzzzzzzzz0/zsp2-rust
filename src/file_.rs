@@ -1,10 +1,9 @@
-use zhscript2::{u_ as zs_, u2_::clpars_, as_ref__};
+use zhscript2::{u_ as zs_, u2_::clpars_, as_ref__, as_mut_ref__};
 use super::{t_};
 use std::{env, path::{Path, PathBuf}, fs, fs::File, io::Read, thread};
 use regex::Regex;
 
-pub fn i__(args:&Vec<String>, args2:&mut Vec<String>,
-		env:&zs_::code_::Env_, wm:&mut zs_::WorldMut_, ret:&mut zs_::result_::List_) -> zs_::Result2_ {
+pub fn i__(args:&Vec<String>, args2:&mut Vec<String>, env:&zs_::code_::Env_) -> zs_::Result2_ {
 	let mut err = String::new();
 	let cp = clpars_::List_::new2(vec![
 		clpars_::Item_::new2t("文件有", clpars_::Typ_::Starts),
@@ -18,7 +17,7 @@ pub fn i__(args:&Vec<String>, args2:&mut Vec<String>,
 		match item.tag_.as_str() {
 			"文件有" => {
 				if Path::new(&tag[item.tag_.len()..]).exists() {
-					t_::add__(ret, env, "1")
+					t_::add__(env, "1")
 				}
 				return 0
 			}
@@ -30,7 +29,7 @@ pub fn i__(args:&Vec<String>, args2:&mut Vec<String>,
 					Ok(mut f) => {
 						let mut buf = String::new();
 						match f.read_to_string(&mut buf) {
-							Ok(_) => t_::add__(ret, env, buf),
+							Ok(_) => t_::add__(env, buf),
 							Err(e) => {
 								err = e.to_string();
 								return 3
@@ -49,17 +48,17 @@ pub fn i__(args:&Vec<String>, args2:&mut Vec<String>,
 					i += 1;
 					if let Some(i2) = s.rfind('.') {
 						if i2 > i {
-							t_::add__(ret, env, &s[i..i2]);
+							t_::add__(env, &s[i..i2]);
 							return 0
 						}
 					}
-					t_::add__(ret, env, &s[i..])
+					t_::add__(env, &s[i..])
 				}
 			}
 			"目录" => {
 				let p = Path::new(&argv[0]);
 				if let Some(p) = p.parent() {
-					t_::add__(ret, env, p.display())
+					t_::add__(env, p.display())
 				}
 			}
 			"遍历目录" => {
@@ -138,15 +137,15 @@ pub fn i__(args:&Vec<String>, args2:&mut Vec<String>,
 						Err(_e) => {/* *err = e.to_string(); false*/true}
 					}
 				}
-				fn add2__(path3:&String, o:&O_, env:&zs_::code_::Env_, wm:&mut zs_::WorldMut_,
-						ret:&mut zs_::result_::List_, err:&mut String) -> Result<(), i32> {
-					let mut main_ret = zs_::result_::List_::new();
+				fn add2__(path3:&String, o:&O_, env:&zs_::code_::Env_, err:&mut String) -> Result<(), i32> {
+					let main_ret = zs_::t__(zs_::result_::List_::new());
 					let mut eval__ = |src:&str, path3:&String, other,
-							ret:&mut zs_::result_::List_, ret2:&zs_::result_::List_| -> Result<(), i32> {
+							ret :zs_::T_<zs_::result_::List_>,
+							ret2:zs_::T_<zs_::result_::List_>| -> Result<(), i32> {
 						if src.is_empty() {return Ok(())}
-						let mut q = zs_::Qv_::new2(Some(env.q.clone()));
+						let q = zs_::Qv_::new2(Some(env.q.clone()));
 						{
-							let args = &mut q.args_;
+							let args = &mut as_mut_ref__!(q.args_);
 							args.add__(path3);
 							if other {
 								for i in &o.other_ {
@@ -193,16 +192,14 @@ pub fn i__(args:&Vec<String>, args2:&mut Vec<String>,
 								}
 							} else {
 								as_ref__!(env.w).dunhao__(args);
-								for i in ret2.iter() {
+								for i in as_ref__!(ret2).iter() {
 									args.add4__(i.clone())
 								}
 							}
 						}
-						if o.bg_ {
-							ret.clear();
-						}
+						//if o.bg_ {as_mut_ref__!(ret).clear();}
 						if let Err((i, s, s2)) = t_::eval__(src,
-						&zs_::code_::Env_::new2(zs_::qv_::t__(q), env), wm, ret) {
+						&zs_::code_::Env_::new9(zs_::t__(q), ret, env)) {
 							match i {
 								zs_::jump_::BREAK_ |
 								zs_::jump_::CONTINUE_ => {if s.is_empty() {return Err(i)}}
@@ -215,17 +212,17 @@ pub fn i__(args:&Vec<String>, args2:&mut Vec<String>,
 					};
 					if let Some(re) = &o.match_ {
 						if !re.is_match(&path3) {
-							return eval__(&o.out_src_, &path3, false, ret, &main_ret)
+							return eval__(&o.out_src_, &path3, false, env.ret.clone(), main_ret.clone())
 						}
 					}
-					eval__(&o.src_, &path3, true, &mut main_ret, &ret)?;
+					eval__(&o.src_, &path3, true, main_ret.clone(), env.ret.clone())?;
 					for (ext, src) in &o.path2_ {
 						let mut f__ = |ok:&mut bool, path4:&mut PathBuf| -> Result<(), i32> {
 							if path4.set_extension(&ext) {
 								let path5 = path4.as_path();
 								if path5.exists() {
 									*ok = true;
-									eval__(&src, &path5.display().to_string(), false, ret, &main_ret)?;
+									eval__(&src, &path5.display().to_string(), false, env.ret.clone(), main_ret.clone())?;
 								}
 							}
 							Ok(())
@@ -236,9 +233,10 @@ pub fn i__(args:&Vec<String>, args2:&mut Vec<String>,
 						path4.set_file_name("index.ext");
 						f__(&mut ok, &mut path4)?; if ok {continue}
 					}
-					eval__(&o.src2_, &path3, false, ret, &main_ret)
+					eval__(&o.src2_, &path3, false, env.ret.clone(), main_ret)
 				}
 				if o.bg_ {
+					let env2 = zs_::code_::Env_::new10(env);
 					thread::spawn(move || {
 						let mut err = String::new();
 						for i in &o.path_ {
@@ -246,9 +244,7 @@ pub fn i__(args:&Vec<String>, args2:&mut Vec<String>,
 							if !add__(i, &o, &mut ret3) {continue}
 							ret3.sort();
 							for i in ret3.iter() {
-								let (mut ret, env2, /*wm*/) = t_::env2__();
-								let wm = &mut t_::ZSWM_.lock().unwrap();
-								if let Err(i) = add2__(i, &o, &env2, wm, &mut ret, &mut err) {
+								if let Err(i) = add2__(i, &o, &env2, &mut err) {
 									if i == zs_::jump_::CONTINUE_ {
 										continue
 									}
@@ -265,7 +261,7 @@ pub fn i__(args:&Vec<String>, args2:&mut Vec<String>,
 					}
 					ret3.sort();
 					for i in &ret3 {
-						if let Err(i) = add2__(i, &o, env, wm, ret, &mut err) {
+						if let Err(i) = add2__(i, &o, env, &mut err) {
 							if i != zs_::jump_::CONTINUE_ {
 								return 1
 							}
@@ -276,7 +272,7 @@ pub fn i__(args:&Vec<String>, args2:&mut Vec<String>,
 			"改变目录" => {
 				let p = Path::new(&argv[0]);
 				if env::set_current_dir(&p).is_ok() {
-					t_::add__(ret, env, "1")
+					t_::add__(env, "1")
 				}
 			}
 			_ => {}

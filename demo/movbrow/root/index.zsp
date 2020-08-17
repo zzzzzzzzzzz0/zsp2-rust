@@ -1,10 +1,11 @@
+<style>
+<%我的文件、1.css%>
+</style>
 <title><%‘网站标题’%></title>
 <%
 如果不‘视频量’那么先
 	我的遍历目录、先
-		循环【‘视频目录量’】【次】先
-			‘视频目录‘次’’、
-		了。
+		循环【‘视频目录量’】【次】‘视频目录‘次’’、。
 	了-配、\.(?i)(mp4|mpg|mpeg|mkv|wmv|avi|asf|webm|flv|f4v|rm|rmvb|dat|mp3)$、-路径、下代码
 		赋予视频量【主】以算术‘视频量’+1。
 		赋予视频‘视频量’【主】、视频‘视频量’标题【主】以‘参数栈’。
@@ -52,33 +53,7 @@
 		显示“忽略 ‘参数’”换行。
 	上代码。
 了。
-
-赋予框宽、图宽、图高以1、150。
-赋予项宽以算术‘图宽’+‘框宽’*2。
-赋予项高以算术‘图高’+‘框宽’*2。
-赋予图宽、图高、项宽、项高以‘图宽’px、‘图高’px、‘项宽’px、‘项高’px。
 %>
-<style>
-<%我的文件、1.css%>
-.item-1 {
-	width: <%‘项宽’%>;
-	height: <%‘项高’%>;
-	font-size:4px; color:#000;
-}
-.item-2 {
-	width: <%‘项宽’%>;
-	height: <%‘项高’%>;
-	display:table-cell;
-}
-.item img {
-	max-width: <%‘图宽’%>;
-	max-height: <%‘图高’%>;
-	border:none;
-}
-</style>
-<script>
-<%我的文件、1.js%>
-</script>
 <div class=bar2>
 <%
 定义加链、参、文以下代码
@@ -106,56 +81,8 @@
 		‘4’“"play2.zsp" target=_blank”。
 	了、‘文.1’‘文.3’‘文.2’。
 了。
+加链“sou.zsp target=_blank”、搜。
 %>
 </div>
-<%循环【3】<br>。%>
-<div id=list></div>
-<script>
-function item__(id, href, htm1, htm2, att) {
-	var d = new__("div");
-	d.className = "item";
-	d.id = id;
-	htm__(d,
-		'<div class=item-1>' +
-		'<a href="' + href + '" ' + att + '>' +
-		'<div class=item-2>' + htm1 + '</div>' +
-		'</a>' +
-		(htm2 ? htm2 : '') + '</div>'
-		);
-	return d;
-}
-
-add__(item__('loading', 'javascript:', '<img src="loading.gif">'), id__("list"));
-
-var int_i_ = 1;
-var int_old_line_;
-var int_ = setInterval(function() {
-	var url = "get.zsp?i=" + int_i_;
-	ajax__(url, function(line) {
-		if("" == line || int_old_line_ == line)
-			return;
-		int_old_line_ = line;
-
-		var o = eval("(" + line + ")");
-		switch(o.type) {
-		case "x":
-			del__(id__("loading"));
-			clearInterval(int_);
-			int_old_line_ = undefined;
-			return;
-		case "no":
-			return;
-		}
-
-		var htm1, htm2;
-		if(o.img) {
-			htm1 = '<img src="get.zsp?c=img&i=' + o.id + '">';
-			htm2 = o.title;
-		} else {
-			htm1 = '<span class=txt>' + o.title + '</span>';
-		}
-		ins__(item__(int_i_, 'show.zsp?i=' + o.id, htm1, htm2, 'target=_blank'), id__("loading"));
-		int_i_++;
-	});
-}, 200);
-</script>
+<%循环【3】<br>%>
+<%加载item.zs、int_i_%>
