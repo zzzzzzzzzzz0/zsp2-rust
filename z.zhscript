@@ -1,0 +1,114 @@
+#!/usr/lib/zhscript2-rust/l --。
+赋予调试【顶】以。
+定义提示、内容以下代码
+	显示“ # ‘内容’”换行。
+上代码。
+定义运行、命令、饶以下代码
+	提示‘命令’。
+	如果‘调试’那么先提示未‘参数0’。返回了。
+	赋予错、误以执行‘命令’。
+	提示‘错’‘误’。
+	如果‘错’并且不‘饶’那么结束‘错’。
+上代码。
+定义行解以下代码
+	调用‘命令行解析’、‘解’、‘参数栈’。
+上代码。
+
+加载lib/clpars4。
+赋予解以调用‘命令行加回调’、、
+	r|r1|d1|r2|d2|r0|d3|r4|r5、下原样
+		运行分支‘参数0’先
+			d3、d1先
+				加载lib/stdc。
+				管道堵调用‘设环境变量’、“RUST_BACKTRACE”、1、1。
+			了
+		了“cargo r --”分叉‘参数0’先
+			d1、d2、d3“ ---- ”。
+			d1“-zhscript-d-bp-ret-var-”。
+			d2“-zhscript-d-tree”。
+			d3“-zhscript-d-lc”。
+		了“ -zsp-”分支‘参数0’先
+			r：help。
+			先
+				“conf ”分叉‘参数0’先
+					r1、r0、d1先
+						demo/分支‘参数0’先
+							movbrow。
+							r0：lose。
+						了/conf.zs“ ‘参数’”
+					了。
+					先
+						“/zzzzzzzzzzz4/home/zzzzzzzzzzz/test/rust-zsp/”分支‘参数0’先
+							d3“3.zs”。
+							r4“doscmd-exist.zs”。
+							r5“mb2.zs”。
+							先“‘参数1’ ‘参数【2】’”了
+						了
+					了
+				了
+			了
+		了上原样、a、、
+	(r5)a、、r、下代码
+		循环【1111】先
+			赋予“错”以执行“curl 127.0.0.1:8085”。
+			如果‘错’那么跳出。
+		了。
+		结束‘错’。
+	上代码、
+	br|b|v|vv、下代码
+		运行“rust.zs ‘参数0’”
+	上代码、0、、
+	meld1、下代码
+		运行“meld demo/movbrow /opt2/opt/movbrow3”
+	上代码、0、、
+	utc、、0、下代码
+		加载lib/regexpr4。加载lib2/util.zs。加载lib/stdc。
+		调用‘遍历正则’、
+下原样
+2022-09-18, rust version 1.66.0-nightly (98ad6a551 2022-09-17) 最远
+2022-09-19, rust version 1.66.0-nightly (a37499ae6 2022-09-18)
+2022-09-20, rust version 1.66.0-nightly (2019147c5 2022-09-19)
+2022-09-22, rust version 1.66.0-nightly (9062b780b 2022-09-21)
+2022-10-01, rust version 1.66.0-nightly (8ce3204af 2022-09-30)
+2022-10-05, rust version 1.66.0-nightly (01af5040f 2022-10-04)
+2022-10-10, rust version 1.66.0-nightly (81f391930 2022-10-09)
+2022-10-15, rust version 1.66.0-nightly (bf15a9e52 2022-10-14)
+2022-10-20, rust version 1.66.0-nightly (4b8f43199 2022-10-19)
+2022-10-25, rust version 1.66.0-nightly (758f19645 2022-10-24)
+2022-11-01, rust version 1.67.0-nightly (95a3a7277 2022-10-31)
+2022-11-03, rust version 1.67.0-nightly (edf018221 2022-11-02)
+2022-11-05, rust version 1.67.0-nightly (09508489e 2022-11-04)
+2022-11-15, rust version 1.67.0-nightly (96ddd32c4 2022-11-14)
+2022-11-17, rust version 1.67.0-nightly (e9493d63c 2022-11-16)*
+
+2022-09-17, rust version 1.65.0-nightly (95a992a68 2022-09-16) x
+2022-09-15, rust version 1.65.0-nightly (750bd1a7f 2022-09-14) x
+2022-09-01, rust version 1.65.0-nightly (9243168fa 2022-08-31) x
+2022-07-01, rust version 1.64.0-nightly (7425fb293 2022-06-30) x
+
+2022-11-18, rust version 1.67.0-nightly (83356b78c 2022-11-17) x
+2022-11-19, rust version 1.67.0-nightly (b833ad56f 2022-11-18) x
+2022-11-22, rust version 1.67.0-nightly (b7bc90fea 2022-11-21) x
+2022-12-01, rust version 1.67.0-nightly (c97b539e4 2022-11-30) x
+
+2022-12-15, rust version 1.68.0-nightly (b70baa4f9 2022-12-14) x
+2023-01-10, rust version 1.68.0-nightly (3020239de 2023-01-09) x
+2023-01-26, rust version 1.69.0-nightly (c18a5e8a5 2023-01-25) x
+2023-03-27, rust version 1.70.0-nightly (db0cbc48d 2023-03-26) x
+2023-04-19, rust version 1.71.0-nightly (c609da59d 2023-04-18) x
+上原样、换行*([^,]+)[^)]+\)([^换行]*)、下代码
+			提示‘参数’。
+			形参起日期、x、。
+			分支‘x’先
+				*先了。
+				先
+					赋予名以nightly-‘日期’-x86_64-unknown-linux-gnu。
+					如果调用‘可执行文件’、“/opt2/rust/usr/rustup/toolchains/‘名’”那么
+						显示“ rust.zs utc ‘名’”换行。
+				了。
+			了
+		上代码。
+	上代码、
+	-h2、“赋予调试【顶】以1。”、0、、
+	#、、h、。
+行解‘参数栈’。
