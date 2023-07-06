@@ -18,7 +18,7 @@ $ git clone "https://github.com/zzzzzzzzzzz0/zhscript2-rust.git"
 $ git clone "https://github.com/zzzzzzzzzzz0/zs2-l4-rust.git"
 $ git clone "https://github.com/zzzzzzzzzzz0/zsp2-rust.git"
 $ cd zsp2-rust
-$ rustup override set nightly
+$ # 已不必 rustup override set nightly
 $ cargo run -- -zsp-conf demo/movbrow/conf.zs
 ```
 

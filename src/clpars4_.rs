@@ -9,7 +9,7 @@ pub fn i__(args:&Vec<String>, args2:&mut Vec<String>, env:&zs_::code_::Env_) -> 
 		clpars_::Item_::new1z("命令行帮助"),
 	]);
 	let mut ret2 = zs_::ok__();
-	cp.for__(&mut args.clone().into_iter(), |tag, argv, _item, _i3| {
+	let _ = cp.for3__(&mut args.clone().into_iter(), |tag, argv, _, _, _, _| {
 		match tag {
 			"命令行加回调" => {
 				match clpars4_::set2__(argv) {
@@ -27,9 +27,14 @@ pub fn i__(args:&Vec<String>, args2:&mut Vec<String>, env:&zs_::code_::Env_) -> 
 				}
 			}
 			"命令行解析" => {
-				if let Err((i, ret3)) = clpars4_::par__(2, 2, env) {
+				if let Err((i, ret3)) = clpars4_::par__(2, 2, 0, env) {
 					match i {
-						251 => t_::exit__(i),
+						clpars_::HELP_ => {
+							if let Err((_, _, s, _)) = ret3 {
+								eprint!("{}", s);
+							}
+							t_::exit__(i);
+						}
 						_ => ret2 = ret3,
 					}
 				}
