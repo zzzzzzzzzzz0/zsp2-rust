@@ -1,0 +1,92 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "zsp2",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=zsp2",
+                    "--package=zsp2"
+                ],
+                "filter": {
+                    "name": "zsp2",
+                    "kind": "bin"
+                }
+            },
+            "args": ["-zsp-help"],
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "lldb", "request": "launch", "name": "mb3", "cwd": "${workspaceFolder}",
+            "cargo": { "args": [ "build", "--bin=zsp2", "--package=zsp2" ], "filter": { "name": "zsp2", "kind": "bin" } },
+            "args": [
+                //"-zhscript-d-path",
+                "-zsp-lib-path", "/opt2/debug/zhscript2-rust/1",
+                "-zsp-conf", "/opt2/opt/movbrow3/conf.zs",
+                "-a", "127.0.0.1:8084",
+                "/_vid", "/opt5/disk/wd2t/zzzzzzzzzzz4/opt/opt/video2"
+            ]
+        },
+        {
+            "type": "lldb", "request": "launch", "name": "mb3 =d", "cwd": "${workspaceFolder}",
+            "cargo": { "args": [ "build", "--bin=zsp2", "--package=zsp2" ], "filter": { "name": "zsp2", "kind": "bin" } },
+            "args": [
+                //"-zhscript-d-path",
+                "-zsp-lib-path", "/opt2/debug/zhscript2-rust/1",
+                "-zsp-conf", "/opt2/opt/movbrow3/conf.zs",
+                "-a", "127.0.0.1:8094",
+                "/home/zzzzzzzzzzz/dwhelper",
+                "/opt5/share/rw",
+                "/opt5/share/rw2"
+            ]
+        },
+        {
+            "type": "lldb", "request": "launch", "name": "test mb", "cwd": "${workspaceFolder}",
+            "cargo": { "args": [ "build", "--bin=zsp2", "--package=zsp2" ], "filter": { "name": "zsp2", "kind": "bin" } },
+            "args": [
+                "-zsp-lib-path", "/opt2/debug/zhscript2-rust/1",
+                "-zsp-conf", "/zzzzzzzzzzz4/home/zzzzzzzzzzz/test/rust-zsp/mb.zs"
+            ]
+        },
+        {
+            "type": "lldb", "request": "launch", "name": "test regx", "cwd": "${workspaceFolder}",
+            "cargo": { "args": [ "build", "--bin=zsp2", "--package=zsp2" ], "filter": { "name": "zsp2", "kind": "bin" } },
+            "args": ["-zsp-conf", "/zzzzzzzzzzz4/home/zzzzzzzzzzz/test/rust-zsp/regx.zs"]
+        },
+        {
+            "type": "lldb", "request": "launch", "name": "test dir-in", "cwd": "${workspaceFolder}",
+            "cargo": { "args": [ "build", "--bin=zsp2", "--package=zsp2" ], "filter": { "name": "zsp2", "kind": "bin" } },
+            "args": ["-zsp-conf", "/zzzzzzzzzzz4/home/zzzzzzzzzzz/test/rust-zsp/dir-in.zs"]
+        },
+        {
+            "type": "lldb", "request": "launch", "name": "test doscmd-exist", "cwd": "${workspaceFolder}",
+            "cargo": { "args": [ "build", "--bin=zsp2", "--package=zsp2" ], "filter": { "name": "zsp2", "kind": "bin" } },
+            "args": ["-zhscript-d-path", "-zsp-conf", "/zzzzzzzzzzz4/home/zzzzzzzzzzz/test/rust-zsp/doscmd-exist.zs"]
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "name": "'tests' zsp2",
+            "cargo": {
+                "args": [
+                    "test",
+                    "--no-run",
+                    "--bin=zsp2",
+                    "--package=zsp2"
+                ],
+                "filter": {
+                    "name": "zsp2",
+                    "kind": "bin"
+                }
+            },
+            "args": [],
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
