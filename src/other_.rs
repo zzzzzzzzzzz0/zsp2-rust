@@ -1,7 +1,7 @@
-use zhscript2::{u_::{self as zs_, }, u2_::clpars_, as_ref__, as_mut_ref__};
+use zhscript2::{u_::{self as zs_, }, u2_::clpars_};
+use zs2_l4_::{regexpr4_, forqv_};
 use super::{t_};
 use std::{env, thread, time::Duration};
-use regex::Regex;
 use rand::Rng;
 
 pub fn i__(args:&Vec<String>, args2:&mut Vec<String>, env:&zs_::code_::Env_) -> zs_::Result2_ {
@@ -9,49 +9,25 @@ pub fn i__(args:&Vec<String>, args2:&mut Vec<String>, env:&zs_::code_::Env_) -> 
 	let cp = clpars_::List_::new2(vec![
 		clpars_::Item_::new2cz("正则配", 2),
 		clpars_::Item_::new2c("正则代", 3),
+		clpars_::Item_::new2c("正则迭", 3),
+		clpars_::Item_::new2c("正则替", 3),
+		clpars_::Item_::new2c("遍历正则", 3),
 		clpars_::Item_::new2c("随机数", 2),
+		clpars_::Item_::new2c("遍历区", 2),
+		clpars_::Item_::new2c("遍历区2", 3),
 		clpars_::Item_::new2c("环境变量", 1),
 		clpars_::Item_::new2c("等待", 1),
 	]);
-	let i = cp.for__(&mut args.clone().into_iter(), |tag, argv, _item, _i3| {
+	let mut ret2 = zs_::ok__();
+	let ret3 = cp.for3__(&mut args.clone().into_iter(), |tag, argv, _, _, _, _| {
 		match tag {
 			"正则配" => {
-				let end = argv.len() - 1;
-				match Regex::new(&argv[end]) {
-					Ok(re) =>
-						for idx in 0..end {
-							let i = &argv[idx];
-							if re.is_match(i) {
-								t_::add__(env, "1");
-								return 0
-							}
+				match regexpr4_::test__(argv) {
+					Ok(b) =>
+						if b {
+							t_::add__(env, "1")
 						},
-					Err(e) => {err = e.to_string(); return 3}
-				}
-			}
-			"正则代" => {
-				match Regex::new(&argv[1]) {
-					Ok(re) => {
-						let txt = &argv[0];
-						let src = &argv[2];
-						for cm in re.captures_iter(txt) {
-							let q = zs_::Qv_::new2(Some(env.q.clone()));
-							{
-								let mut args = as_mut_ref__!(q.args_);
-								for idx in 1..cm.len() {
-									if !args.is_empty() {
-										as_ref__!(env.w).dunhao__(&mut args);
-									}
-									args.add__(&cm[idx]);
-								}
-							}
-							if let Err((i, s, s2)) = t_::eval__(&src, &zs_::code_::Env_::new2(zs_::t__(q), env)) {
-								t_::err__(i, s, s2, &mut err);
-								return 3
-							}
-						}
-					}
-					Err(e) => {err = e.to_string(); return 3}
+					Err(e) => {ret2 = e; return 3}
 				}
 			}
 			"随机数" => {
@@ -85,6 +61,7 @@ pub fn i__(args:&Vec<String>, args2:&mut Vec<String>, env:&zs_::code_::Env_) -> 
 				if let Ok(true) = gen__::<i64>(argv, false, true, env) {return 0}
 				if let Err(e) = gen__::<f64>(argv, true, false, env) {err = e; return 3}
 			}
+			"遍历区" | "遍历区2" => ret2 = forqv_::z__(env, 2),
 			"环境变量" =>
 				if let Ok(s) = env::var(&argv[0]) {
 					t_::add__(env, s)
@@ -95,12 +72,22 @@ pub fn i__(args:&Vec<String>, args2:&mut Vec<String>, env:&zs_::code_::Env_) -> 
 						thread::sleep(Duration::from_secs_f32(i)),
 					Err(e) => {err = e.to_string(); return 3}
 				},
-			_ => {}
+			_ => {
+				ret2 = regexpr4_::for__(argv, match tag {
+					"正则代" => 1,
+					"正则迭" => 11,
+					"正则替" => 10,
+					_ => 0
+				}, env)
+			}
 		}
 		0
 	}, |s| {
 		args2.push(s.to_string());
 		0
 	});
-	t_::ierr__(i, args, &err)
+	if ret2.is_err() {
+		return ret2
+	}
+	t_::ierr__(if let Err((i, _)) = ret3 {i} else {0}, args, &err)
 }

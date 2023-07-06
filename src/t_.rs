@@ -10,7 +10,7 @@ lazy_static! {
 
 pub fn main_var__(name:&str) -> String {
 	let mut ret2 = zs_::result_::List_::new();
-	as_ref__!(MAIN_QV_).vars_.get__(name, false, true, &mut ret2, &mut zs_::result_::List_::new());
+	as_ref__!(MAIN_QV_).vars_.get__(name, false, true, &mut ret2);
 	let v = ret2.to_vec__();
 	{if !v.is_empty() {&v[0]} else {""}}.to_string()
 }
@@ -30,24 +30,20 @@ pub fn eval__(src:&str, env:&zs_::code_::Env_) -> zs_::Result2_ {
 pub fn exit__(i:i32) {
 	process::exit(i);
 }
-pub fn if_quit__(i:i32, s:&str) {
-	if i == zs_::jump_::QUIT_ {
-		if s.is_empty() {
-			exit__(0);
-		}
-		if let Some(i) = zs_::t_::s2n__(s) {
-			exit__(i);
-		}
+pub fn if_quit__(i:i32, i2:i32, s:&String) {
+	if i == zs_::jump_::QUIT_ && i2 != zs_::jump_::NO_ {
+		eprint!("{}", s);
+		exit__(i2);
 	}
 }
 
-pub fn err__(i:i32, s:String, s2:String, ret:&mut String) {
-	if_quit__(i, &s);
-	*ret = ["<pre style='font-size:12px'>", &s, &s2, "\n", &i.to_string(), "码</pre>"].concat()
+pub fn err__(i:i32, i2:i32, s:String, s2:String, ret:&mut String) {
+	if_quit__(i, i2, &s);
+	*ret = ["<pre style='font-size:12px'>", &s, &s2, "</pre>"].concat()
 }
 
-pub fn errexit__(i:i32, s:String, s2:String) {
-	if_quit__(i, &s);
+pub fn errexit__(i:i32, i2:i32, s:String, s2:String) {
+	if_quit__(i, i2, &s);
 	eprintln!("{}{}", s, s2);
 	exit__(zs_::result2_::exitcode__(i));
 }
