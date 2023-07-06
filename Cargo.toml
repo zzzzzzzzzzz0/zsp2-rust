@@ -1,16 +1,19 @@
 [package]
 name = "zsp2"
-version = "0.9.0"
+version = "3.5.15"
 authors = ["zzzzzzzzzzz <zzzzzzzzzzzgg@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-zhscript2 = {version = "0.9.0", path = "../zhscript2-rust", features = ["thread"]}
-zs2_l4_ = {version = "0.9.0", path = "../zs2-l4-rust"}
-actix-web = "2.0.0"
-actix-rt = "1.0.0"
-actix-files = "0.2.1"
+zhscript2 = {version = "3.6.30", path = "../zhscript2-rust", features = ["thread"]}
+zs2_l4_ = {version = "3.6.30", path = "../zs2-l4-rust"}
+actix-web = "4.2.1"
+actix-rt = "2.7.0"
+actix-files = "0.6.2"
 lazy_static = "1.4.0"
 url = "2.1.1"
 regex = "1.3.4"
 rand = "0.7.3"
+
+[profile.release]
+strip = true

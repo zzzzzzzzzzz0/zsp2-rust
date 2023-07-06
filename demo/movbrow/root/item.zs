@@ -66,7 +66,7 @@ var int_ = setInterval(function() {
 
 		var htm1, htm2;
 		if(o.img) {
-			htm1 = '<img src="get.zsp?c=img&i=' + o.id + '">';
+			htm1 = '<img src="get.zsp?c=img&i=' + o.id + '<%‘?图’%>">';
 			htm2 = o.title;
 		} else {
 			htm1 = '<span class=txt>' + o.title + '</span>';
@@ -74,5 +74,5 @@ var int_ = setInterval(function() {
 		ins__(item__(int_i_, 'show.zsp?i=' + o.id, htm1, htm2, 'target=_blank'), id__("loading"));
 		int_i_++;
 	});
-}, 200);
+}, 100);
 </script>

@@ -1,6 +1,12 @@
 <%
 赋予号以我的参、i。
-别名标题、封面、路径以视频‘号’标题、视频‘号’封面【主】、视频‘号’。
+别名标题、封面、路径以视频‘号’标题、视频‘号’封面【号】、视频‘号’。
+如果不存在封面那么赋予封面以。
+（别名zs以视频‘号’zs【号】。
+如果存在zs那么先
+	赋予目录2以我的目录、‘路径’。
+	加载‘zs’。
+了。）
 别名演员表、截图集以‘路径’演员表【主】、‘路径’截图集【主】。
 %>
 <title><%‘标题’%> - <%‘网站标题’%></title>
@@ -17,44 +23,96 @@ function captu__() {
 }
 </script>
 <div class="item2 item-1 item-2">
+<%
+分叉‘-show-path’先
+	先了先了。
+	1、0先
+		“<span class="txt">‘路径’</span> &nbsp; <span class="txt">‘号’</span><br>”
+		如果‘封面’那么“<span class="txt">‘封面’</span>”。
+	了。
+	解释‘-show-path’。
+了。
+%>
 <div class=fengmian id=fengmian>
 <%
-如果存在封面那么“<img src="get.zsp?c=img&i=‘号’">”。
+如果‘封面’那么“<img src="get.zsp?c=img&i=‘号’‘?图’">”。
 %>
 </div>
 <div><span class="txt size2"><%‘标题’%></span></div>
 <div class=info>
 <div class=bar>
 <%
-循环【3】【次】先
+循环【5】【次】先
 	赋予文以分叉‘次’先
-		2：桌面。
-		3：桌面全屏。
+		2、3、4、5：桌面。
+		4、5：连续。
+		3、5：全屏。
 	了播放。
-	“<div class=play><a href="play”分叉‘次’先
-		1先了。2、3：2。‘次’
-	了“.zsp?i=‘号’&t=‘文’" target=_blank>‘文’</a></div>”换行
+	赋予主名以分叉‘次’先
+		1：play。2、3：ctl。4、5：play3。
+	了。
+	“<a class=play href="‘主名’.zsp?i=‘号’&t=‘文’" target=”分叉‘主名’先
+		ctl‘主名’。_blank
+	了“>‘文’</a>”换行
 了。
 %>
-</div><div class=bar>
-<div class=play><a href="javascript:" onclick="return captu__()">配图</a></div>
+</div>
+<%
+如果‘-xp-sr’那么加载‘-xp-sr’。
+如果‘外播放器量’那么先
+	“<div class=bar>”
+	循环【‘外播放器量’】【次】先
+		别名器标题以外播放器‘次’标题。
+		赋予+以1。
+		如果‘次’大于1或者等于‘外播放器量’那么先
+			赋予隔以“&nbsp;”换行。
+			赋予器标题以我的正则迭、‘器标题’、^(\\)(.*)(-)、下代码
+				赋予+【上】、隔【上】以、‘参数2’。
+			上代码。
+			如果‘+’那么“</span>”循环【1】先“&nbsp;”了。
+			‘隔’。
+		了。
+		如果‘+’那么先
+			“<span class=play2>”。
+			赋予+以。
+		了。
+		“<a class=play2 href="ctl.zsp?i=‘号’&pi=‘次’" target=_blank>‘器标题’</a>”
+	了
+	</div>
+了。
+%>
+<div class=bar>
+<a class=play href="javascript:" onclick="return captu__()">配图</a>
 </div>
 <%
 如果存在演员表那么
 	“<span class="txt size2">演员表 / 剧情</span>
 	<pre class=txt>‘演员表’</pre>”。
-如果存在截图集那么先
-	显示截图集‘截图集’换行。
-	<div>。
-	我的遍历目录、‘截图集’、-仅此、-配、(?i)\.(jpg|png|gif)$、-路径、下代码
-		如果存在封面【上】【上】并且‘参数1’等于‘封面’那么再来。
+定义得图集、目录、补配以下代码
+	赋予配以分叉‘-typef’先
+		‘补配’。
+		1先
+			加载lib/buding。
+			调用‘多串更换’、‘补配’调用‘迭代三’、下代码
+				、‘参数1’、\‘参数1’
+			上代码、1、[、]、(、)、.、{、}、|
+		了
+	了(?i)\.(jpg|jpeg|png|gif|webp)$。
+	如果‘-h2-show’那么显示‘参数0’‘参数’--‘配’换行。
+	我的遍历目录、‘目录’、-仅此、-配、‘配’、-路径、下代码
+		如果‘参数1’等于‘封面’那么再来。
 	上代码、
 	-总装、下代码
-		显示‘参数’换行。
+		如果‘-h2-show’那么显示‘参数’换行。
 		“<img src="get.zsp?c=img&s=‘参数1’">”。
 	上代码。
-	</div>。
-了。
+上代码。
+赋予合以。
+如果存在截图集那么
+	赋予合以‘合’得图集‘截图集’。
+如果‘封面’那么
+	赋予合以‘合’先得图集先我的目录、‘封面’了/先我的主名、‘封面’了~\d+了。
+如果‘合’那么<div>‘合’</div>。
 %>
 </div>
 </div>

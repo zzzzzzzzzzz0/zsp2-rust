@@ -9,7 +9,7 @@
 <div class=info>
 <div><span class="txt size2"><%‘视频‘号’标题’%></span></div>
 <div class=bar>
-<div class=play><a href="javascript:window.close()">关闭</a></div>
+<a class=play href="javascript:window.close()">关闭</a>
 </div>
 </div>
 <video src="get.zsp?c=mov&i=<%‘号’%>" controls="controls">
