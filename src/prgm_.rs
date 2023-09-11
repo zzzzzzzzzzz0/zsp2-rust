@@ -41,7 +41,7 @@ pub fn i__(args:&Vec<String>, args2:&mut Vec<String>, env:&zs_::code_::Env_) -> 
 					{
 						let mut o = obj.o_.take();
 						let o = o.as_mut();
-						if let Some(mut stdout1) = o {
+						/*if let Some(mut stdout1) = o {
 							let mut stdout = BufReader::new(stdout1);
 							let env2 = zs_::code_::Env_::new10(env);
 							let over_src = over_src.clone();
@@ -60,7 +60,7 @@ pub fn i__(args:&Vec<String>, args2:&mut Vec<String>, env:&zs_::code_::Env_) -> 
 								}
 							});
 							return zs_::ok__()
-						}
+						}*/
 					}
 					zs_::result2_::err2__("! stdout")
 				}) {
