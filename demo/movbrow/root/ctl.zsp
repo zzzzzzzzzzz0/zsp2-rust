@@ -18,7 +18,7 @@
 如果存在器柄【桌面】并且‘器柄’并且‘号’（并且分叉‘号’先next3、back3：0。1了）那么先
 	如果存在器号【桌面】并且‘器号’那么先
 		如果存在pid【桌面】那么先
-			赋予命令以“kill -9 ”解释下代码
+			赋予命令以“kill  ”解释下代码
 				定义获、1以下代码
 					赋予果以‘1’。
 					管道堵执行“ps -o pid --no-headers --ppid ‘1’”、-出、下代码
@@ -69,10 +69,14 @@
 	了。
 了。
 如果‘边’那么先
-	赋予mplayer、env以加载env.zs、mplayer。
-	如果‘mplayer’那么
-		管道堵执行“‘mplayer’ -quiet -ao pulse "‘到边了.mp3’"”、-错、0 解释‘env’、
-			-被动者、““volume 100 1”换行”。
+	分叉‘-play-e’先
+		1先
+			赋予mplayer、env以加载env.zs、mplayer。
+			如果‘mplayer’那么
+				管道堵执行“‘mplayer’ -quiet -ao pulse "‘到边了.mp3’"”、-错、0 解释‘env’、
+					-被动者、““volume 100 1”换行”。
+		了。
+	了。
 	返回
 了。
 

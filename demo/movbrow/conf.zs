@@ -10,7 +10,7 @@
 上代码。
 解释下代码
 	模块杂。
-	赋予-xp-e、-xp-sr、-show-path以window.close()、。
+	赋予-play-e、-xp-e、-xp-sr、-show-path以1、window.close()、。
 	赋予yh、dyh以"、'。
 上代码。
 

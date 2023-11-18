@@ -24,10 +24,11 @@ function captu__() {
 </script>
 <div class="item2 item-1 item-2">
 <%
+赋予“ ”以“&nbsp;”。
 分叉‘-show-path’先
 	先了先了。
 	1、0先
-		“<span class="txt">‘路径’</span> &nbsp; <span class="txt">‘号’</span><br>”
+		“<span class="txt">‘路径’</span> ‘ ’ <span class="txt">‘号’</span><br>”
 		如果‘封面’那么“<span class="txt">‘封面’</span>”。
 	了。
 	解释‘-show-path’。
@@ -63,13 +64,19 @@ function captu__() {
 	“<div class=bar>”
 	循环【‘外播放器量’】【次】先
 		别名器标题以外播放器‘次’标题。
+		分叉‘器标题’先
+			\t先
+				“</span> ‘ ’ <span class=txt>‘外播放器‘次’命令’</span> <span class=play2>”。
+				再来
+			了。
+		了。
 		赋予+以1。
 		如果‘次’大于1或者等于‘外播放器量’那么先
-			赋予隔以“&nbsp;”换行。
+			赋予隔以‘ ’换行。
 			赋予器标题以我的正则迭、‘器标题’、^(\\)(.*)(-)、下代码
 				赋予+【上】、隔【上】以、‘参数2’。
 			上代码。
-			如果‘+’那么“</span>”循环【1】先“&nbsp;”了。
+			如果‘+’那么“</span>”‘ ’。
 			‘隔’。
 		了。
 		如果‘+’那么先
