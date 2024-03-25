@@ -4,7 +4,6 @@ mod clpars4_;
 mod prgm_;
 mod other_;
 mod t_;
-mod cmp_;
 
 use zhscript2::{u_ as zs_, u2_::clpars_, as_mut_ref__, as_ref__};
 use actix_web::{/*middleware,*/ web, App, HttpRequest, HttpServer, HttpResponse, Responder, http::header};

@@ -1,12 +1,13 @@
 [package]
 name = "zsp2"
-version = "3.5.15"
+version = "4.3.24"
 authors = ["zzzzzzzzzzz <zzzzzzzzzzzgg@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-zhscript2 = {version = "3.6.30", path = "../zhscript2-rust", features = ["thread"]}
-zs2_l4_ = {version = "3.6.30", path = "../zs2-l4-rust"}
+zhscript2 = {version = "4.3.11", path = "../zhscript2-rust", features = ["thread"]}
+zs2_l4_ = {version = "4.3.11", path = "../zs2-l4-rust"}
+zhscript2_util = {version = "0.1.0", path = "../zhscript2-rust-lib/util"}
 actix-web = "4.2.1"
 actix-rt = "2.7.0"
 actix-files = "0.6.2"

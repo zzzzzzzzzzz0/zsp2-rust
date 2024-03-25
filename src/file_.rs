@@ -168,9 +168,7 @@ pub fn i__(args:&Vec<String>, args2:&mut Vec<String>, env:&zs_::code_::Env_) -> 
 				}
 				impl Ord for Path3 {
 					fn cmp(&self, other: &Self) -> Ordering {
-						//self.s_.cmp(&other.s_)
-						//println!("{:?} {:?}", self.s_,other.s_);
-						super::cmp_::bb__(self.s_.as_bytes(), other.s_.as_bytes())
+						zhscript2_util::cmp_::bb__(self.s_.as_bytes(), other.s_.as_bytes())
 					}
 				}
 				impl PartialOrd for Path3 {fn partial_cmp(&self, other: &Self) -> Option<Ordering> {Some(self.cmp(other))}}
@@ -230,50 +228,19 @@ pub fn i__(args:&Vec<String>, args2:&mut Vec<String>, env:&zs_::code_::Env_) -> 
 									as_ref__!(env.w).dunhao__(args);
 									match i.as_str() {
 										"-标题" => {
-											let ss:Vec<&str> = path[path3.i_..].split("/").collect();
-											let end = ss.len() - 1;
-											let mut s = String::new();
-											let mut idx = ss.len();
-											let mut skip = false;
-											'l1: loop {
-												if idx == 0 {break}
-												idx -= 1;
-												let i = ss[idx];
+											args.add__(zhscript2_util::title_::by_path__(path, path3.i_, o.title_len_, "-", &|i| {
 												for i2 in &o.title_skip_ {
 													if i.starts_with(&*i2) {
-														skip = true;
-														continue 'l1;
+														return true;
 													}
 												}
 												for i2 in &o.title_skip2_ {
 													if i.ends_with(&*i2) {
-														skip = true;
-														continue 'l1;
+														return true;
 													}
 												}
-												let mut start = 0;
-												for idx2 in 0..idx {
-													let i2 = ss[idx2];
-													if i.starts_with(i2) && start < i2.len() {
-														start = i2.len()
-													}
-												}
-												let mut end2 = i.len();
-												if start >= end2 {continue}
-												if !skip && !s.is_empty() {s.insert(0, '-')}
-												if idx == end {
-													if let Some(idx) = i.rfind('.') {
-														end2 = idx;
-													}
-												}
-												skip = false;
-												s.insert_str(0, &i[start..end2]);
-												if s.len() >= o.title_len_ {
-													if start > 0 {s.insert_str(0, &i[0..start]);}
-													break
-												}
-											}
-											args.add__(s);
+												false
+											}));
 										}
 										"" => {}
 										_ => {}
