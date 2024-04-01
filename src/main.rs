@@ -145,6 +145,10 @@ async fn index__(req: HttpRequest) -> impl Responder {
 	}
 }
 
+pub fn issue__() -> &'static str {
+	concat!("ZhServerPage2 v", env!("CARGO_PKG_VERSION"), "\n")
+}
+
 #[actix_rt::main]
 async fn main() -> std::io::Result<()> {
 	/*std::env::set_var("RUST_LOG", "actix_web=info");
@@ -190,7 +194,7 @@ async fn main() -> std::io::Result<()> {
 				clpars_::Item_::new3("-zsp-conf", 1, "由配置文件"),
 				clpars_::Item_::new(HELP),
 				clpars_::Item_::new0(),
-			], concat!("ZhServerPage2 v", env!("CARGO_PKG_VERSION"), "\n"));
+			], issue__());
 			let v = as_ref__!(conf_q.args_).to_vec__();
 			let _ = cp.for3__(&mut v.into_iter(), |tag, argv, _, _, _, _| {
 				match tag {
@@ -201,7 +205,7 @@ async fn main() -> std::io::Result<()> {
 						if let Err((_, _, s, _)) =
 								zs_::world_::clpars__(&mut vec![zs_::world_::HELP_.to_string()].into_iter(),
 								false, false, false, false, &mut conf_q, t_::ZSW_.clone()) {
-							print!("{}", s);
+							print!("\n{}", s);
 						}
 						t_::exit__(clpars_::HELP_);
 					}
@@ -264,7 +268,7 @@ async fn main() -> std::io::Result<()> {
 		let app =
 		App::new()
 			//.wrap(middleware::Logger::default())
-			.service(web::resource("/zsp-ver").to(|| async { env!("CARGO_PKG_VERSION") }))
+			.service(web::resource("/zsp-ver").to(|| async { issue__().to_owned() + zs_::world_::issue__() }))
 			;
 		if use_ret2 {
 			app.default_service(web::to(index__))
